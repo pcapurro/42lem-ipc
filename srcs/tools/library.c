@@ -8,3 +8,11 @@ int	getStrLen(const char* str)
 
 	return (len);
 }
+
+bool	isDigit(const char nb)
+{
+	if (nb < 48 || nb > 57)
+		return (false);
+	
+	return (true);
+}
