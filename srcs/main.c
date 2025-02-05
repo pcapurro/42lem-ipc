@@ -9,6 +9,8 @@ void	setToNull(tInfos* infos)
 
 	infos->msgId = -1;
 	infos->map = NULL;
+	
+	infos->coord = -1;
 }
 
 void	endFree(tInfos* infos)
@@ -47,6 +49,8 @@ int	main(const int argc, const char** arg)
 			return (1);
 		}
 	}
+
+	// shm_unlink(GAME_NAME), exit(0);
 
 	tInfos	infos;
 

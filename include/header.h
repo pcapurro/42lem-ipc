@@ -35,6 +35,7 @@ struct sInfos
 	int		msgId;
 	char*	map;
 
+	int		coord;
 };
 
 typedef struct sInfos tInfos;
@@ -51,14 +52,21 @@ int		getStrLen(const char* str);
 void	writeStr(const char* str, const int fd);
 bool	isDigit(const char nb);
 
+void	order(tInfos* infos);
+void	executeOrder(tInfos* infos, const char target);
+void	getToNextPosition(tInfos* infos);
+void	getNewPosition(tInfos* infos);
+
+void	printMap(tInfos* infos);
+
+void	startRoutine(tInfos* infos);
+void	initializeRoutine(tInfos* infos, const char* arg);
+
 void	loadMap(tInfos* infos);
 void	initializeMap(tInfos* infos);
 
 void	loadMessages(tInfos* infos);
 void	initializeMessages(tInfos* infos);
-
-void	startRoutine(tInfos* infos);
-void	initializeRoutine(tInfos* infos, const char* arg);
 
 void	systemFailed(void);
 void	memoryFailed(void);

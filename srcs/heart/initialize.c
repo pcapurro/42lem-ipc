@@ -6,14 +6,14 @@ void	initializeMap(tInfos* infos)
 
 	infos->init = true;
 
-	if (ftruncate(infos->mapFd, (sizeof(char) * 96)) != 0)
+	if (ftruncate(infos->mapFd, (sizeof(char) * (96 + 1))) != 0)
 		perror("42lem-ipc: "), endFree(infos), exit(1);
 
-	infos->map = mmap(NULL, sizeof(char) * 96, PROT_READ | PROT_WRITE, MAP_SHARED, infos->mapFd, 0);
+	infos->map = mmap(NULL, sizeof(char) * (96 + 1), PROT_READ | PROT_WRITE, MAP_SHARED, infos->mapFd, 0);
 	if (infos->map == MAP_FAILED)
 		perror("42lem-ipc: "), endFree(infos), exit(1);
 
-	infos->map[95] = '\0';
+	infos->map[96] = '\0';
 	for (int i = 0; i != 96; i++)
 		infos->map[i] = '0';
 }
@@ -45,6 +45,4 @@ void	initializeRoutine(tInfos* infos, const char* arg)
 	}
 	else
 		initializeMap(infos), initializeMessages(infos);
-
-	// infos->map[infos->team] = 'v';
 }
