@@ -11,8 +11,10 @@
 # include <sys/mman.h>
 # include <fcntl.h>
 # include <string.h>
+# include <signal.h>
 
 # include <sys/ipc.h>
+# include <sys/msg.h>
 # include <sys/shm.h>
 # include <sys/types.h>
 # include <sys/syscall.h>
@@ -22,16 +24,27 @@
 
 struct sInfos
 {
-	int		fd;
+	int		mapFd;
+	int		msgFd;
 	int		team;
 
 	bool	init;
 
 	char*	map;
+	key_t*	messages;
 
 };
 
 typedef struct sInfos tInfos;
+
+struct sMessage
+{
+	long	type;
+	char*	message;
+
+};
+
+typedef struct sMessage tMsg;
 
 int		getStrLen(const char* str);
 void	writeStr(const char* str, const int fd);
@@ -39,6 +52,9 @@ bool	isDigit(const char nb);
 
 void	loadMap(tInfos* infos);
 void	initializeMap(tInfos* infos);
+
+void	loadMessages(tInfos* infos);
+void	initializeMessages(tInfos* infos);
 
 void	startRoutine(tInfos* infos);
 void	initializeRoutine(tInfos* infos, const char* arg);

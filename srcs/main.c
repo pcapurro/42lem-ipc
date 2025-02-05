@@ -2,26 +2,39 @@
 
 void	setToNull(tInfos* infos)
 {
-	infos->fd = -1;
+	infos->mapFd = -1;
+	infos->msgFd = -1;
 	infos->team = 0;
 
 	infos->init = false;
 
 	infos->map = NULL;
+	infos->messages = NULL;
 }
 
 void	endFree(tInfos* infos)
 {
-	if (infos->fd != -1)
+	if (infos->mapFd != -1)
 	{
-		close(infos->fd);
+		close(infos->mapFd);
+		close(infos->msgFd);
+
 		if (infos->init == true)
+		{
 			shm_unlink("/game");
+			shm_unlink("/messages");
+
+			for (int i = 0; i != 10; i++)
+				msgctl(infos->messages[i], IPC_RMID, NULL);
+		}
 	}
 
 	if (infos->map != NULL)
 		munmap(infos->map, sizeof(char) * 96);
+	if (infos->messages != NULL)
+		munmap(infos->messages, sizeof(int) * 10);
 	infos->map = NULL;
+	infos->messages = NULL;
 }
 
 int	main(const int argc, const char** arg)
@@ -41,6 +54,8 @@ int	main(const int argc, const char** arg)
 	}
 
 	tInfos	infos;
+
+	// shm_unlink("/game"), shm_unlink("/messages"), exit(0);
 
 	setToNull(&infos);
 

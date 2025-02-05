@@ -19,7 +19,7 @@ void	startRoutine(tInfos* infos)
 		sleep(1);
 		k++;
 
-		if (k == 7)
+		if (k == 4)
 			return ;
 	}
 }
