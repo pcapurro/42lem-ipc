@@ -24,39 +24,16 @@ void	initializeMessages(tInfos* infos)
 
 	infos->init = true;
 
-	infos->msgFd = shm_open("/messages", O_CREAT | O_EXCL | O_RDWR, 0666);
-	if (infos->msgFd == -1)
+	infos->msgId = msgget(MSG_KEY, IPC_CREAT | 0666);
+	if (infos->msgId == -1)
 		perror("42lem-ipc: "), endFree(infos), exit(1);
-
-	if (ftruncate(infos->msgFd, (sizeof(key_t) * 10)) != 0)
-		perror("42lem-ipc: "), endFree(infos), exit(1);
-
-	infos->messages = mmap(NULL, sizeof(key_t) * 10, PROT_READ | PROT_WRITE, MAP_SHARED, infos->msgFd, 0);
-	if (infos->messages == MAP_FAILED)
-		perror("42lem-ipc: "), endFree(infos), exit(1);
-
-	for (int i = 0, value = 21000; i != 10; i++, value++)
-	{
-		infos->messages[i] = msgget(value, 0666 | IPC_CREAT);
-		if (infos->messages[i] == -1)
-			perror("42lem-ipc: "), endFree(infos), exit(1);
-		// else
-			// printf("%d : '%d'\n", i, infos->messages[i]);
-	}
-
-	// tMsg	message;
-	// message.type = 1;
-	// message.message = strdup("wsh");
-	// msgsnd(infos->messages[3], &message, sizeof(message.message), 0);
-	// printf("wrote message '%s' at %d\n", message.message, infos->messages[3]);
-	// sleep(5);
 }
 
 void	initializeRoutine(tInfos* infos, const char* arg)
 {
 	infos->team = arg[0] - 48;
 
-	infos->mapFd = shm_open("/game", O_CREAT | O_EXCL | O_RDWR, 0666);
+	infos->mapFd = shm_open(GAME_NAME, O_CREAT | O_EXCL | O_RDWR, 0666);
 	if (infos->mapFd == -1)
 	{
 		if (errno != EEXIST)

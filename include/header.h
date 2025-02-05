@@ -22,16 +22,18 @@
 # define SYSTEM_FAILED "Error! System failed."
 # define MEMORY_FAILED "Error! Memory failed."
 
+# define GAME_NAME "/game"
+# define MSG_KEY 21000
+
 struct sInfos
 {
 	int		mapFd;
-	int		msgFd;
 	int		team;
 
 	bool	init;
 
+	int		msgId;
 	char*	map;
-	key_t*	messages;
 
 };
 
@@ -39,9 +41,8 @@ typedef struct sInfos tInfos;
 
 struct sMessage
 {
-	long	type;
-	char*	message;
-
+	long	teamId;
+	int		info;
 };
 
 typedef struct sMessage tMsg;
