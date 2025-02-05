@@ -25,6 +25,10 @@
 # define GAME_NAME "/game"
 # define MSG_KEY 21000
 
+# define MAP_WIDTH 16
+# define MAP_HEIGHT 7
+# define MAP_LENGTH (MAP_WIDTH * MAP_HEIGHT)
+
 struct sInfos
 {
 	int		mapFd;
@@ -33,7 +37,8 @@ struct sInfos
 	bool	init;
 
 	int		msgId;
-	char*	map;
+	char*	realMap;
+	char**	map;
 
 	int		coord;
 	bool	alive;
@@ -57,17 +62,13 @@ void	order(tInfos* infos);
 void	executeOrder(tInfos* infos, const char target);
 void	moveNow(tInfos* infos);
 void	dieNow(tInfos* infos);
-void	move(tInfos* infos);
 
 void	printMap(tInfos* infos);
 
 void	startRoutine(tInfos* infos);
 void	initializeRoutine(tInfos* infos, const char* arg);
 
-void	loadMap(tInfos* infos);
 void	initializeMap(tInfos* infos);
-
-void	loadMessages(tInfos* infos);
 void	initializeMessages(tInfos* infos);
 
 void	systemFailed(void);

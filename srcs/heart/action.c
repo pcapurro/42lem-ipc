@@ -6,18 +6,18 @@ void	spawnNow(tInfos* infos)
 
 	int	free = 0, value = 0;
 
-	for (int i = 0; infos->map[i] != '\0'; i++)
+	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
-		if (infos->map[i] == '0')
+		if (infos->realMap[i] == '0')
 			free++;
 	}
 
 	value = rand() % free;
 	free = 0;
 
-	for (int i = 0; infos->map[i] != '\0'; i++)
+	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
-		if (infos->map[i] == '0')
+		if (infos->realMap[i] == '0')
 		{
 			free++;
 			if (free == value)
@@ -48,7 +48,7 @@ void	moveNow(tInfos* infos)
 		else
 			executeOrder(infos, data.info);
 	}
-	infos->map[infos->coord] = infos->team + 48;
+	infos->realMap[infos->coord] = infos->team + 48;
 }
 
 

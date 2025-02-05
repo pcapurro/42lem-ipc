@@ -9,7 +9,6 @@ NAME = 42lem-ipc
 SRCS = srcs/main.c \
 	srcs/help.c \
 	srcs/heart/initialize.c \
-	srcs/heart/load.c \
 	srcs/heart/routine.c \
 	srcs/heart/action.c \
 	srcs/heart/order.c \

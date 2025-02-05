@@ -8,6 +8,7 @@ void	setToNull(tInfos* infos)
 	infos->init = false;
 
 	infos->msgId = -1;
+	infos->realMap = NULL;
 	infos->map = NULL;
 
 	infos->coord = -1;
@@ -31,8 +32,15 @@ void	endFree(tInfos* infos)
 	}
 
 	if (infos->map != NULL)
-		munmap(infos->map, sizeof(char) * 96);
-	infos->map = NULL;
+	{
+		for (int i = 0; infos->map[i] != NULL; i++)
+			free(infos->map[i]);
+		free(infos->map);
+	}
+
+	if (infos->realMap != NULL)
+		munmap(infos->realMap, sizeof(char) * 96);
+	infos->realMap = NULL;
 }
 
 int	main(const int argc, const char** arg)
