@@ -36,6 +36,7 @@ struct sInfos
 	char*	map;
 
 	int		coord;
+	bool	alive;
 };
 
 typedef struct sInfos tInfos;
@@ -54,8 +55,9 @@ bool	isDigit(const char nb);
 
 void	order(tInfos* infos);
 void	executeOrder(tInfos* infos, const char target);
-void	getToNextPosition(tInfos* infos);
-void	getNewPosition(tInfos* infos);
+void	moveNow(tInfos* infos);
+void	dieNow(tInfos* infos);
+void	move(tInfos* infos);
 
 void	printMap(tInfos* infos);
 

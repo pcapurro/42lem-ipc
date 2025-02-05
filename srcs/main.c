@@ -9,8 +9,9 @@ void	setToNull(tInfos* infos)
 
 	infos->msgId = -1;
 	infos->map = NULL;
-	
+
 	infos->coord = -1;
+	infos->alive = true;
 }
 
 void	endFree(tInfos* infos)

@@ -11,6 +11,7 @@ SRCS = srcs/main.c \
 	srcs/heart/initialize.c \
 	srcs/heart/load.c \
 	srcs/heart/routine.c \
+	srcs/heart/action.c \
 	srcs/heart/order.c \
 	srcs/tools/library.c \
 	srcs/tools/print.c \
