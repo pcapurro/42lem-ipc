@@ -12,7 +12,7 @@ void	setToNull(tInfos* infos)
 	infos->map = NULL;
 
 	infos->coord = -1;
-	infos->alive = true;
+	infos->alive = false;
 }
 
 void	endFree(tInfos* infos)
@@ -50,7 +50,7 @@ int	main(const int argc, const char** arg)
 	else
 	{
 		if (argc != 2 || getStrLen(arg[1]) != 1 \
-			|| isDigit(arg[1][0]) == false)
+			|| isDigit(arg[1][0]) == false || arg[1][0] == '0')
 		{
 			writeStr("Error! Invalid arguments.\n", 2);
 			writeStr("See -h or --help for more informations.\n", 2);

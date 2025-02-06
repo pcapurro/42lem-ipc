@@ -60,8 +60,8 @@ bool	isDigit(const char nb);
 
 void	order(tInfos* infos);
 void	executeOrder(tInfos* infos, const char target);
+void	spawnNow(tInfos* infos);
 void	moveNow(tInfos* infos);
-void	dieNow(tInfos* infos);
 
 void	printMap(tInfos* infos);
 

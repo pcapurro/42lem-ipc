@@ -12,8 +12,10 @@ void	spawnNow(tInfos* infos)
 			free++;
 	}
 
-	value = rand() % free;
+	value = rand() % free - 1;
 	free = 0;
+
+	printf("%d\n", value);
 
 	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
@@ -32,29 +34,18 @@ void	moveNow(tInfos* infos)
 {
 	printf("moving now...\n");
 
-	if (infos->coord == -1)
-		spawnNow(infos);
-	else
+	tMsg	data;
+
+	if (msgrcv(infos->msgId, &data, sizeof(data) - sizeof(long), infos->team, IPC_NOWAIT) == -1)
 	{
-		tMsg	data;
-
-		if (msgrcv(infos->msgId, &data, sizeof(data) - sizeof(long), infos->team, IPC_NOWAIT) == -1)
-		{
-			if (errno != EAGAIN && errno != EWOULDBLOCK && errno != ENOMSG)
-				perror("42lem-ipc: "), endFree(infos), exit(1);
-			else
-				order(infos);
-		}
+		if (errno != EAGAIN && errno != EWOULDBLOCK && errno != ENOMSG)
+			perror("42lem-ipc: "), endFree(infos), exit(1);
 		else
-			executeOrder(infos, data.info);
+			order(infos);
 	}
+	else
+		executeOrder(infos, data.info);
 	infos->realMap[infos->coord] = infos->team + 48;
-}
 
-
-void	dieNow(tInfos* infos)
-{
-	printf("dying now...\n");
-
-	infos->alive = false;
+	printf("'%d'\n", infos->coord);
 }
