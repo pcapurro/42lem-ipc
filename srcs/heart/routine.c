@@ -10,8 +10,8 @@ void	startRoutine(tInfos* infos)
 	while (isOver(infos) == false)
 	{
 		updateMap(infos);
-		if (infos->init == false || infos->coord != -1)
-			moveNow(infos);
+		// if (infos->init == false || infos->coord != -1)
+			// moveNow(infos);
 
 		getTeamsNumber(infos);
 		getPlayersNumber(infos);
@@ -19,9 +19,9 @@ void	startRoutine(tInfos* infos)
 			printMap(infos);
 
 		sleep(1);
-		if (infos->init == false && k == 2)
-			break ;
-		k++;
+		// if (infos->init == false && k == 2)
+			// break ;
+		// k++;
 	}
 	if (infos->init == true)
 		printMap(infos);

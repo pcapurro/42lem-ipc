@@ -38,6 +38,9 @@ struct sInfos
 
 	bool	init;
 	bool	state;
+
+	int		dest;
+
 	int		playersNb;
 	int		teamsNb;
 
@@ -62,7 +65,7 @@ int		getStrLen(const char* str);
 void	writeStr(const char* str, const int fd);
 bool	isDigit(const char nb);
 
-void	order(tInfos* infos);
+void	createOrder(tInfos* infos);
 void	executeOrder(tInfos* infos, const char target);
 int		spawnNow(tInfos* infos);
 void	moveNow(tInfos* infos);

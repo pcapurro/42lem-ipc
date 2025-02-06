@@ -1,5 +1,7 @@
 #include "../include/header.h"
 
+int		init;
+
 void	setToNull(tInfos* infos)
 {
 	infos->mapFd = -1;
@@ -7,6 +9,9 @@ void	setToNull(tInfos* infos)
 
 	infos->init = false;
 	infos->state = false;
+
+	infos->dest = -1;
+
 	infos->playersNb = 1;
 	infos->teamsNb = 1;
 
@@ -45,6 +50,26 @@ void	endFree(tInfos* infos)
 	infos->realMap = NULL;
 }
 
+void	endSignal(const int signal)
+{
+	printf("\033[2K");
+	printf("\033[G");
+
+	printf("Shutting down...\n");
+
+	if (init > 0)
+		shm_unlink(GAME_NAME), printf("deleting map...\n");
+
+	if (init > 42)
+	{
+		int	value = msgget(MSG_KEY, 0666);
+		if (value != -1)
+			msgctl(value, IPC_RMID, NULL), printf("deleting messages...\n");
+	}
+
+	exit(1);
+}
+
 int	main(const int argc, const char** arg)
 {	
 	if (argc == 2 && isHelp(arg[1]) == true)
@@ -61,9 +86,12 @@ int	main(const int argc, const char** arg)
 		}
 	}
 
-	// shm_unlink(GAME_NAME), exit(0);
-
 	tInfos	infos;
+
+	init = 0;
+
+	signal(SIGINT, endSignal);
+	signal(SIGSEGV, endSignal);
 
 	setToNull(&infos);
 

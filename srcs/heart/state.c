@@ -93,7 +93,7 @@ bool	isOver(tInfos* infos)
 {
 	bool	dead = false;
 
-	if (isNowDead(infos) == true)
+	if (infos->coord != -1 && isNowDead(infos) == true)
 		dead = true;
 
 	if (infos->init == false)
@@ -117,7 +117,7 @@ bool	isOver(tInfos* infos)
 
 		if (infos->state == true && infos->teamsNb == 1)
 		{
-			infos->realMap[infos->coord] = '#';
+			infos->realMap[0] = '#';
 			return (true);
 		}
 	}

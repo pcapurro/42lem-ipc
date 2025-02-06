@@ -2,7 +2,7 @@
 
 void	printMap(tInfos* infos)
 {
-	const char*	alphabet = "abcdefghijklmnopqrstuvwxyz\1";
+	const char*	alphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	printf("\033[H\033[J");
 	printf("– 42lem-ipc –\n\n");
@@ -31,7 +31,10 @@ void	printMap(tInfos* infos)
 				printf(" │\n %d │", k + 2);
 			k++;
 		}
-		printf(" %c ", infos->realMap[i]);
+		if (infos->realMap[i] == '#')
+			printf(" 0 ");
+		else
+			printf(" %c ", infos->realMap[i]);
 	}
 	printf(" │\n    ");
 	for (int i = 0; i != MAP_WIDTH + 1; i++)
