@@ -6,6 +6,8 @@ void	setToNull(tInfos* infos)
 	infos->team = 0;
 
 	infos->init = false;
+	infos->playersNb = 1;
+	infos->teamsNb = 1;
 
 	infos->msgId = -1;
 	infos->realMap = NULL;

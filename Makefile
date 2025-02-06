@@ -10,6 +10,8 @@ SRCS = srcs/main.c \
 	srcs/help.c \
 	srcs/heart/initialize.c \
 	srcs/heart/routine.c \
+	srcs/heart/map.c \
+	srcs/heart/state.c \
 	srcs/heart/action.c \
 	srcs/heart/order.c \
 	srcs/tools/library.c \

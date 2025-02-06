@@ -2,10 +2,10 @@
 
 void	initializeMap(tInfos* infos)
 {
-	if (infos->init == true)
-		printf("initializing map...\n");
-	else
-		printf("loading map...\n");
+	// if (infos->init == true)
+	// 	printf("initializing map...\n");
+	// else
+	// 	printf("loading map...\n");
 
 	if (infos->init == true)
 	{
@@ -49,10 +49,10 @@ void	initializeMap(tInfos* infos)
 
 void	initializeMessages(tInfos* infos)
 {
-	if (infos->init == true)
-		printf("initializing messages...\n");
-	else
-		printf("loading messages...\n");
+	// if (infos->init == true)
+	// 	printf("initializing messages...\n");
+	// else
+	// 	printf("loading messages...\n");
 
 	if (infos->init == true)
 		infos->msgId = msgget(MSG_KEY, IPC_CREAT | 0666);

@@ -22,11 +22,13 @@
 # define SYSTEM_FAILED "Error! System failed."
 # define MEMORY_FAILED "Error! Memory failed."
 
+# define ERASE_LINE "\033[1A\033[2K"
+
 # define GAME_NAME "/game"
 # define MSG_KEY 21000
 
-# define MAP_WIDTH 16
-# define MAP_HEIGHT 7
+# define MAP_WIDTH 21
+# define MAP_HEIGHT 16
 # define MAP_LENGTH (MAP_WIDTH * MAP_HEIGHT)
 
 struct sInfos
@@ -35,6 +37,8 @@ struct sInfos
 	int		team;
 
 	bool	init;
+	int		playersNb;
+	int		teamsNb;
 
 	int		msgId;
 	char*	realMap;
@@ -63,6 +67,13 @@ void	executeOrder(tInfos* infos, const char target);
 void	spawnNow(tInfos* infos);
 void	moveNow(tInfos* infos);
 
+bool	isOver(tInfos* infos);
+bool	isNowDead(tInfos* infos);
+
+void	getTeamsNumber(tInfos* infos);
+void	getPlayersNumber(tInfos* infos);
+
+void	updateMap(tInfos* infos);
 void	printMap(tInfos* infos);
 
 void	startRoutine(tInfos* infos);

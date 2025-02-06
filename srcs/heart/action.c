@@ -2,8 +2,6 @@
 
 void	spawnNow(tInfos* infos)
 {
-	printf("spawning...\n");
-
 	int	free = 0, value = 0;
 
 	for (int i = 0; infos->realMap[i] != '\0'; i++)
@@ -15,8 +13,6 @@ void	spawnNow(tInfos* infos)
 	value = rand() % free - 1;
 	free = 0;
 
-	printf("%d\n", value);
-
 	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
 		if (infos->realMap[i] == '0')
@@ -27,13 +23,12 @@ void	spawnNow(tInfos* infos)
 		}
 	}
 
+	infos->realMap[infos->coord] = infos->team + 48;
 	infos->alive = true;
 }
 
 void	moveNow(tInfos* infos)
 {
-	printf("moving now...\n");
-
 	tMsg	data;
 
 	if (msgrcv(infos->msgId, &data, sizeof(data) - sizeof(long), infos->team, IPC_NOWAIT) == -1)
@@ -46,6 +41,4 @@ void	moveNow(tInfos* infos)
 	else
 		executeOrder(infos, data.info);
 	infos->realMap[infos->coord] = infos->team + 48;
-
-	printf("'%d'\n", infos->coord);
 }
