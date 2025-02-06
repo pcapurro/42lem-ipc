@@ -45,10 +45,22 @@ void	getPlayersNumber(tInfos* infos)
 
 	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
-		if (infos->realMap[i] != '0')
+		if (infos->realMap[i] != '0' && infos->realMap[i] != '#')
 			nb++;
 	}
 	infos->playersNb = nb;
+}
+
+void	removeTeam(tInfos* infos, const char team)
+{
+	for (int i = 0; infos->map[i] != NULL; i++)
+	{
+		for (int k = 0; infos->map[i][k] != '\0'; k++)
+		{
+			if (infos->map[i][k] == team)
+				infos->map[i][k] = '0';
+		}
+	}
 }
 
 void	getTeamsNumber(tInfos* infos)
@@ -63,31 +75,52 @@ void	getTeamsNumber(tInfos* infos)
 			if (infos->map[i][k] != '0')
 			{
 				team = infos->map[i][k];
+				removeTeam(infos, team);
 				nb++;
-
-				for (int o = 0; infos->map[o] != NULL; o++)
-				{
-					for (int l = 0; infos->map[o][l] != '\0'; l++)
-					{
-						if (infos->map[o][l] == team)
-							infos->map[o][l] = '0';
-					}
-				}
 			}
 		}
 	}
+
 	infos->teamsNb = nb;
+	if (infos->init == true)
+	{
+		if (infos->teamsNb > 1 && infos->state == false)
+			infos->state = true;
+	}
 }
 
 bool	isOver(tInfos* infos)
 {
+	bool	dead = false;
+
+	if (isNowDead(infos) == true)
+		dead = true;
+
 	if (infos->init == false)
 	{
-		if (infos->alive == false)
+		if (dead == true)
 			return (true);
+
+		for (int i = 0; infos->realMap[i] != '\0'; i++)
+		{
+			if (infos->realMap[i] == '#')
+				return (true);
+		}
 	}
 	else
-		;
+	{
+		if (dead == true)
+		{
+			infos->realMap[infos->coord] = '0';
+			infos->coord = -1;
+		}
+
+		if (infos->state == true && infos->teamsNb == 1)
+		{
+			infos->realMap[infos->coord] = '#';
+			return (true);
+		}
+	}
 
 	return (false);
 }

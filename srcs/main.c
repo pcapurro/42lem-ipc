@@ -6,6 +6,7 @@ void	setToNull(tInfos* infos)
 	infos->team = 0;
 
 	infos->init = false;
+	infos->state = false;
 	infos->playersNb = 1;
 	infos->teamsNb = 1;
 
@@ -14,7 +15,6 @@ void	setToNull(tInfos* infos)
 	infos->map = NULL;
 
 	infos->coord = -1;
-	infos->alive = false;
 }
 
 void	endFree(tInfos* infos)

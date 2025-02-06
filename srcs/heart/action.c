@@ -1,6 +1,6 @@
 #include "../../include/header.h"
 
-void	spawnNow(tInfos* infos)
+int	spawnNow(tInfos* infos)
 {
 	int	free = 0, value = 0;
 
@@ -10,7 +10,14 @@ void	spawnNow(tInfos* infos)
 			free++;
 	}
 
-	value = rand() % free - 1;
+	if (free == 0)
+	{
+		writeStr("Error! Could not join the game (map is full)\n", 2);
+		endFree(infos);
+		exit(1);
+	}
+
+	value = rand() % free;
 	free = 0;
 
 	for (int i = 0; infos->realMap[i] != '\0'; i++)
@@ -22,9 +29,9 @@ void	spawnNow(tInfos* infos)
 				infos->coord = i;
 		}
 	}
-
 	infos->realMap[infos->coord] = infos->team + 48;
-	infos->alive = true;
+
+	return (0);
 }
 
 void	moveNow(tInfos* infos)

@@ -4,29 +4,31 @@ void	startRoutine(tInfos* infos)
 {
 	int		k = 0;
 
-	spawnNow(infos);
+	if (spawnNow(infos) != 0)
+		return ;
+
 	while (isOver(infos) == false)
 	{
-		if (infos->alive == true)
-		{
-			updateMap(infos);
+		updateMap(infos);
+		if (infos->init == false || infos->coord != -1)
+			moveNow(infos);
 
-			if (isNowDead(infos) == true)
-				infos->alive = false, infos->realMap[infos->coord] = '0';
-			else
-				moveNow(infos);
-		}
-
+		getTeamsNumber(infos);
+		getPlayersNumber(infos);
 		if (infos->init == true)
-		{
-			getPlayersNumber(infos);
-			getTeamsNumber(infos);
 			printMap(infos);
-		}
-		sleep(1);
 
-		if (k == 2)
+		sleep(1);
+		if (infos->init == false && k == 2)
 			break ;
 		k++;
 	}
+	if (infos->init == true)
+		printMap(infos);
+
+	if (infos->realMap[infos->coord] != '#' && infos->realMap[infos->coord] != '0')
+		infos->realMap[infos->coord] = '0';
+
+	while (infos->init == true && infos->playersNb != 0)
+		getPlayersNumber(infos), usleep(500);
 }

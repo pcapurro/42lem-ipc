@@ -8,7 +8,7 @@ void	printMap(tInfos* infos)
 	printf("– 42lem-ipc –\n\n");
 
 	printf("Number of players: %d\n", infos->playersNb);
-	printf("Number of teams: %d\n", infos->teamsNb);
+	printf("Number of teams: %d\n\n", infos->teamsNb);
 	printf("Game map: \n\n");
 
 	printf("    ");

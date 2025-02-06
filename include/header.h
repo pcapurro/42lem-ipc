@@ -37,6 +37,7 @@ struct sInfos
 	int		team;
 
 	bool	init;
+	bool	state;
 	int		playersNb;
 	int		teamsNb;
 
@@ -45,7 +46,6 @@ struct sInfos
 	char**	map;
 
 	int		coord;
-	bool	alive;
 };
 
 typedef struct sInfos tInfos;
@@ -64,7 +64,7 @@ bool	isDigit(const char nb);
 
 void	order(tInfos* infos);
 void	executeOrder(tInfos* infos, const char target);
-void	spawnNow(tInfos* infos);
+int		spawnNow(tInfos* infos);
 void	moveNow(tInfos* infos);
 
 bool	isOver(tInfos* infos);
