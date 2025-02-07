@@ -58,13 +58,13 @@ void	endSignal(const int signal)
 	printf("Shutting down...\n");
 
 	if (init > 0)
-		shm_unlink(GAME_NAME), printf("deleting map...\n");
+		shm_unlink(GAME_NAME);
 
 	if (init > 42)
 	{
 		int	value = msgget(MSG_KEY, 0666);
 		if (value != -1)
-			msgctl(value, IPC_RMID, NULL), printf("deleting messages...\n");
+			msgctl(value, IPC_RMID, NULL);
 	}
 
 	exit(1);

@@ -13,15 +13,13 @@ void	startRoutine(tInfos* infos)
 		if (infos->init == false || infos->coord != -1)
 			moveNow(infos);
 
-		return ;
-
 		getTeamsNumber(infos);
 		getPlayersNumber(infos);
 		if (infos->init == true)
 			printMap(infos);
 
 		sleep(1);
-		if (infos->init == true && k == 7)
+		if (k == 7)
 			break ;
 		k++;
 	}

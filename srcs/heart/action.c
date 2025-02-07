@@ -36,13 +36,31 @@ int	spawnNow(tInfos* infos)
 
 void	moveRandomly(tInfos* infos)
 {
-	int	value = 0, moves = 8;
-	int	centerX = 0, centerY = 0;
+	int	value = rand() % 8;
 
-	centerX = infos->coord / MAP_WIDTH;
-	centerY = infos->coord % MAP_WIDTH;
+	if (value == 0)
+		moveLeft(infos);
 
-	infos->dest = 0;
+	if (value == 1)
+		moveRight(infos);
+
+	if (value == 2)
+		moveUp(infos);
+
+	if (value == 3)
+		moveDown(infos);
+
+	if (value == 4)
+		moveLeftUp(infos);
+
+	if (value == 5)
+		moveRightUp(infos);
+
+	if (value == 6)
+		moveLeftDown(infos);
+
+	if (value == 7)
+		moveRightDown(infos);
 }
 
 void	moveNow(tInfos* infos)
