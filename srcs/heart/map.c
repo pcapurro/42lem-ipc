@@ -31,10 +31,10 @@ void	printMap(tInfos* infos)
 				printf(" │\n %d │", k + 2);
 			k++;
 		}
-		if (infos->realMap[i] == '#')
+		if (infos->realMap[i] == '#' || infos->realMap[i] == '0')
 			printf(" 0 ");
 		else
-			printf(" %c ", infos->realMap[i]);
+			printf(" \033[31m%c\033[0m ", infos->realMap[i]);
 	}
 	printf(" │\n    ");
 	for (int i = 0; i != MAP_WIDTH + 1; i++)

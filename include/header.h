@@ -68,6 +68,19 @@ bool	isDigit(const char nb);
 void	createOrder(tInfos* infos);
 void	executeOrder(tInfos* infos, const char target);
 int		spawnNow(tInfos* infos);
+
+void	move(tInfos* infos, const int newCoord);
+
+void	*moveLeft(tInfos* infos);
+void	*moveRight(tInfos* infos);
+void	*moveUp(tInfos* infos);
+void	*moveDown(tInfos* infos);
+
+void	*moveLeftUp(tInfos* infos);
+void	*moveRightUp(tInfos* infos);
+void	*moveLeftDown(tInfos* infos);
+void	*moveRightDown(tInfos* infos);
+
 void	moveNow(tInfos* infos);
 
 bool	isOver(tInfos* infos);

@@ -13,6 +13,7 @@ SRCS = srcs/main.c \
 	srcs/heart/map.c \
 	srcs/heart/state.c \
 	srcs/heart/action.c \
+	srcs/heart/move.c \
 	srcs/heart/order.c \
 	srcs/tools/library.c \
 	srcs/tools/print.c \
