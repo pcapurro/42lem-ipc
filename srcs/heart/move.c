@@ -77,7 +77,7 @@ void	*moveLeftUp(tInfos* infos)
 	int	centerX = infos->coord / MAP_WIDTH;
 	int	centerY = infos->coord % MAP_WIDTH;
 
-	if ((centerY - 1) < 0 || centerX - 1 == 0)
+	if ((centerX - 1) < 0 || (centerY - 1) < 0)
 		return (NULL);
 
 	int newCoord = ((centerX - 1) * MAP_WIDTH) + (centerY - 1);
@@ -93,7 +93,7 @@ void	*moveRightUp(tInfos* infos)
 	int	centerX = infos->coord / MAP_WIDTH;
 	int	centerY = infos->coord % MAP_WIDTH;
 
-	if ((centerY - 1) < 0 || centerX - 1 == 0)
+	if ((centerX - 1) < 0 || infos->map[centerX][centerY + 1] == '\0')
 		return (NULL);
 
 	int newCoord = ((centerX - 1) * MAP_WIDTH) + (centerY + 1);
@@ -109,7 +109,7 @@ void	*moveLeftDown(tInfos* infos)
 	int	centerX = infos->coord / MAP_WIDTH;
 	int	centerY = infos->coord % MAP_WIDTH;
 
-	if ((centerY - 1) < 0 || centerX - 1 == 0)
+	if (infos->map[centerX + 1] == NULL || (centerY - 1) < 0)
 		return (NULL);
 
 	int newCoord = ((centerX + 1) * MAP_WIDTH) + (centerY - 1);
@@ -125,7 +125,7 @@ void	*moveRightDown(tInfos* infos)
 	int	centerX = infos->coord / MAP_WIDTH;
 	int	centerY = infos->coord % MAP_WIDTH;
 
-	if ((centerY - 1) < 0 || centerX - 1 == 0)
+	if (infos->map[centerX + 1] == NULL || infos->map[centerX][centerY + 1] == '\0')
 		return (NULL);
 
 	int newCoord = ((centerX + 1) * MAP_WIDTH) + (centerY + 1);
