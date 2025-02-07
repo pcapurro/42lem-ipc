@@ -1,7 +1,5 @@
 #include "../../include/header.h"
 
-extern int	init;
-
 void	initializeMap(tInfos* infos)
 {
 	// if (infos->init == true)
@@ -13,7 +11,6 @@ void	initializeMap(tInfos* infos)
 	{
 		if (ftruncate(infos->mapFd, sizeof(char) * (MAP_LENGTH + 1)) != 0)
 			perror("42lem-ipc"), endFree(infos), exit(1);
-		init = 42;
 	}
 	else
 	{
@@ -58,7 +55,7 @@ void	initializeMessages(tInfos* infos)
 	// 	printf("loading messages...\n");
 
 	if (infos->init == true)
-		infos->msgId = msgget(MSG_KEY, IPC_CREAT | 0666), init++;
+		infos->msgId = msgget(MSG_KEY, IPC_CREAT | 0666);
 	else
 		infos->msgId = msgget(MSG_KEY, 0666);
 

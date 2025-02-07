@@ -1,6 +1,6 @@
 #include "../include/header.h"
 
-int		init;
+tInfos*	data;
 
 void	setToNull(tInfos* infos)
 {
@@ -13,6 +13,7 @@ void	setToNull(tInfos* infos)
 	infos->dest = -1;
 
 	infos->playersNb = 1;
+	infos->alliesNb = 1;
 	infos->teamsNb = 1;
 
 	infos->msgId = -1;
@@ -33,7 +34,6 @@ void	endFree(tInfos* infos)
 
 	if (infos->msgId != -1)
 	{
-		close(infos->msgId);
 		if (infos->init == true)
 			msgctl(infos->msgId, IPC_RMID, NULL);
 	}
@@ -52,20 +52,10 @@ void	endFree(tInfos* infos)
 
 void	endSignal(const int signal)
 {
-	printf("\033[2K");
-	printf("\033[G");
+	writeStr(ERASE_LINE, 2);
+	writeStr(END_MSG, 2);
 
-	printf("Shutting down...\n");
-
-	if (init > 0)
-		shm_unlink(GAME_NAME);
-
-	if (init > 42)
-	{
-		int	value = msgget(MSG_KEY, 0666);
-		if (value != -1)
-			msgctl(value, IPC_RMID, NULL);
-	}
+	endFree(data);
 
 	exit(1);
 }
@@ -88,10 +78,8 @@ int	main(const int argc, const char** arg)
 
 	tInfos	infos;
 
-	init = 0;
-
+	data = &infos;
 	signal(SIGINT, endSignal);
-	signal(SIGSEGV, endSignal);
 
 	setToNull(&infos);
 

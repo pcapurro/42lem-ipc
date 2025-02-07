@@ -1,5 +1,35 @@
 #include "../../include/header.h"
 
+void	printColor(const int team)
+{
+	if (team == 1)
+		printf("\033[31m");
+
+	if (team == 2)
+		printf("\033[32m");
+
+	if (team == 3)
+		printf("\033[33m");
+
+	if (team == 4)
+		printf("\033[34m");
+
+	if (team == 5)
+		printf("\033[35m");
+
+	if (team == 6)
+		printf("\033[36m");
+
+	if (team == 7)
+		printf("\033[37m");
+
+	if (team == 8)
+		printf("\033[38;5;220m");
+
+	if (team == 9)
+		printf("\033[38;5;94m");
+}
+
 void	printMap(tInfos* infos)
 {
 	const char*	alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -7,8 +37,8 @@ void	printMap(tInfos* infos)
 	printf("\033[H\033[J");
 	printf("– 42lem-ipc –\n\n");
 
-	printf("Number of players: %d\n", infos->playersNb);
-	printf("Number of teams: %d\n\n", infos->teamsNb);
+	printf("Players: %d\n", infos->playersNb);
+	printf("Teams: %d\n", infos->teamsNb);
 	printf("Game map: \n\n");
 
 	printf("    ");
@@ -34,7 +64,11 @@ void	printMap(tInfos* infos)
 		if (infos->realMap[i] == '#' || infos->realMap[i] == '0')
 			printf(" 0 ");
 		else
-			printf(" \033[31m%c\033[0m ", infos->realMap[i]);
+		{
+			printf(" ");
+			printColor(infos->realMap[i] - 48);
+			printf("%c\033[0m ", infos->realMap[i]);
+		}
 	}
 	printf(" │\n    ");
 	for (int i = 0; i != MAP_WIDTH + 1; i++)

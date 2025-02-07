@@ -21,8 +21,9 @@
 
 # define SYSTEM_FAILED "Error! System failed."
 # define MEMORY_FAILED "Error! Memory failed."
+# define END_MSG "Emergency shutdown...\n"
 
-# define ERASE_LINE "\033[1A\033[2K"
+# define ERASE_LINE "\033[2K\033[G"
 
 # define GAME_NAME "/game"
 # define MSG_KEY 21000
@@ -42,6 +43,7 @@ struct sInfos
 	int		dest;
 
 	int		playersNb;
+	int		alliesNb;
 	int		teamsNb;
 
 	int		msgId;
@@ -87,10 +89,13 @@ bool	isOver(tInfos* infos);
 bool	isNowDead(tInfos* infos);
 
 void	getTeamsNumber(tInfos* infos);
+void	getAlliesNumber(tInfos* infos);
 void	getPlayersNumber(tInfos* infos);
+void	getGameInfos(tInfos* infos);
 
-void	updateMap(tInfos* infos);
+void	printColor(const int team);
 void	printMap(tInfos* infos);
+void	updateMap(tInfos* infos);
 
 void	startRoutine(tInfos* infos);
 void	initializeRoutine(tInfos* infos, const char* arg);

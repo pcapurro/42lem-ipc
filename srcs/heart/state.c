@@ -51,7 +51,19 @@ void	getPlayersNumber(tInfos* infos)
 	infos->playersNb = nb;
 }
 
-void	removeTeam(tInfos* infos, const char team)
+void	getAlliesNumber(tInfos* infos)
+{
+	int	nb = 0;
+
+	for (int i = 0; infos->realMap[i] != '\0'; i++)
+	{
+		if (infos->realMap[i] == infos->team + 48)
+			nb++;
+	}
+	infos->alliesNb = nb;
+}
+
+void	removeTeam(tInfos* infos, const int team)
 {
 	for (int i = 0; infos->map[i] != NULL; i++)
 	{
@@ -66,7 +78,7 @@ void	removeTeam(tInfos* infos, const char team)
 void	getTeamsNumber(tInfos* infos)
 {
 	int		nb = 0;
-	char	team = '\0';
+	int		team = 0;
 
 	for (int i = 0; infos->map[i] != NULL; i++)
 	{
@@ -87,6 +99,13 @@ void	getTeamsNumber(tInfos* infos)
 		if (infos->teamsNb > 1 && infos->state == false)
 			infos->state = true;
 	}
+}
+
+void	getGameInfos(tInfos* infos)
+{
+	getTeamsNumber(infos);
+	getAlliesNumber(infos);
+	getPlayersNumber(infos);
 }
 
 bool	isOver(tInfos* infos)
