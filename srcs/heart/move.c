@@ -169,7 +169,31 @@ void	moveRandomly(tInfos* infos)
 
 void	moveTowardsTarget(tInfos* infos, const int target)
 {
-	printf("heading to %c%d...\n", "abcdefghijklmnopqrstu"[target % MAP_WIDTH], target / MAP_WIDTH);
+	int	x = infos->coord % MAP_WIDTH;
+	int y = infos->coord / MAP_WIDTH;
+
+	int targetX = target % MAP_WIDTH;
+	int targetY = target / MAP_WIDTH;
+
+	if (x > targetX && y > targetY)
+		moveLeftUp(infos);
+	else if (x > targetX && y < targetY)
+		moveLeftDown(infos);
+
+	else if (x < targetX && y > targetY)
+		moveRightUp(infos);
+	else if (x < targetX && y < targetY)
+		moveRightDown(infos);
+
+	else if (x == targetX && y > targetY)
+		moveUp(infos);
+	else if (x == targetX && y < targetY)
+		moveDown(infos);
+
+	else if (x > targetX && y == targetY)
+		moveLeft(infos);
+	else if (x < targetX && y == targetY)
+		moveRight(infos);
 }
 
 void	moveNow(tInfos* infos)

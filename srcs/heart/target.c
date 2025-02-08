@@ -34,48 +34,6 @@ int		retrieveLastTarget(tInfos* infos)
 	if (infos->lastTarget == -1)
 		return (-1);
 
-	int	mapLen = getStrLen(infos->realMap);
-
-	int left = infos->lastTarget - 1;
-	int right = infos->lastTarget + 1;
-
-	int up = infos->lastTarget - MAP_WIDTH;
-	int down = infos->lastTarget + MAP_WIDTH;
-
-	int leftUp = up - 1;
-	int leftDown = down - 1;
-
-	int rightUp = up + 1;
-	int rightDown = down + 1;
-
-	if (left >= 0 && infos->realMap[left] > 48 && infos->realMap[left] != infos->team)
-		return (left);
-
-	if (right < mapLen && infos->realMap[right] > 48 && infos->realMap[right] != infos->team)
-		return (right);
-
-	if (up >= 0 && infos->realMap[up] > 48 && infos->realMap[up] != infos->team)
-		return (up);
-
-	if (down < mapLen && infos->realMap[down] > 48 && infos->realMap[down] != infos->team)
-		return (down);
-
-	if (leftUp >= 0 && leftUp < mapLen && infos->realMap[leftUp] > 48 \
-		&& infos->realMap[leftUp] != infos->team)
-		return (leftUp);
-
-	if (leftDown >= 0 && leftDown < mapLen && infos->realMap[leftDown] > 48 \
-		&& infos->realMap[leftDown] != infos->team)
-		return (leftDown);
-
-	if (rightUp >= 0 && rightUp < mapLen && infos->realMap[rightUp] > 48 \
-		&& infos->realMap[rightUp] != infos->team)
-		return (rightUp);
-
-	if (rightDown >= 0 && rightDown < mapLen && infos->realMap[rightDown] > 48 \
-		&& infos->realMap[rightDown] != infos->team)
-		return (rightDown);
-
 	return (-1);
 }
 
