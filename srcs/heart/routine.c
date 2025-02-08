@@ -1,6 +1,6 @@
 #include "../../include/header.h"
 
-int	spawnNow(tInfos* infos)
+void	spawnNow(tInfos* infos)
 {
 	int	free = 0, value = 0;
 
@@ -26,16 +26,26 @@ int	spawnNow(tInfos* infos)
 		}
 	}
 	infos->realMap[infos->coord] = infos->team + 48;
+}
 
-	return (0);
+void	getGameInfos(tInfos* infos)
+{
+	infos->teamsNb = getTeamsNumber(infos->map);
+	infos->alliesNb = getAlliesNumber(infos->realMap, infos->team);
+	infos->playersNb = getPlayersNumber(infos->realMap);
+
+	if (infos->init == true)
+	{
+		if (infos->teamsNb > 1 && infos->state == false)
+			infos->state = true;
+	}
 }
 
 void	startRoutine(tInfos* infos)
 {
 	int		k = 0;
 
-	if (spawnNow(infos) != 0)
-		return ;
+	spawnNow(infos);
 
 	while (isOver(infos) == false)
 	{
@@ -57,5 +67,9 @@ void	startRoutine(tInfos* infos)
 		infos->realMap[infos->coord] = '0';
 
 	while (infos->init == true && infos->playersNb != 0)
-		printMap(infos), getPlayersNumber(infos), sleep(1);
+	{
+		printMap(infos);
+		infos->playersNb = getPlayersNumber(infos->realMap);
+		sleep(1);
+	}
 }

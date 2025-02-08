@@ -64,12 +64,18 @@ struct sMessage
 typedef struct sMessage tMsg;
 
 int		getStrLen(const char* str);
-void	writeStr(const char* str, const int fd);
 bool	isDigit(const char nb);
 
-void	createOrder(tInfos* infos);
-void	executeOrder(tInfos* infos, const char target);
-int		spawnNow(tInfos* infos);
+void	writeStr(const char* str, const int fd);
+void	removeElement(char** array, const int element);
+
+int		createNewTarget(tInfos* infos);
+int		getLastTarget(tInfos* infos);
+int		retrieveLastTarget(tInfos* infos);
+
+void	sendNewTarget(tInfos* infos, const int newTarget);
+
+void	spawnNow(tInfos* infos);
 
 void	move(tInfos* infos, const int newCoord);
 
@@ -83,14 +89,16 @@ void	*moveRightUp(tInfos* infos);
 void	*moveLeftDown(tInfos* infos);
 void	*moveRightDown(tInfos* infos);
 
+void	moveRandomly(tInfos* infos);
+void	moveTowardsTarget(tInfos* infos, const int target);
 void	moveNow(tInfos* infos);
 
 bool	isOver(tInfos* infos);
 bool	isNowDead(tInfos* infos);
 
-void	getTeamsNumber(tInfos* infos);
-void	getAlliesNumber(tInfos* infos);
-void	getPlayersNumber(tInfos* infos);
+int		getTeamsNumber(char** map);
+int		getAlliesNumber(const char* map, const int team);
+int		getPlayersNumber(const char* map);
 void	getGameInfos(tInfos* infos);
 
 void	printColor(const int team);

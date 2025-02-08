@@ -39,73 +39,51 @@ bool	isNowDead(tInfos* infos)
 	return (false);
 }
 
-void	getPlayersNumber(tInfos* infos)
+int	getPlayersNumber(const char* map)
 {
 	int	nb = 0;
 
-	for (int i = 0; infos->realMap[i] != '\0'; i++)
+	for (int i = 0; map[i] != '\0'; i++)
 	{
-		if (infos->realMap[i] != '0' && infos->realMap[i] != '#')
+		if (map[i] > 48)
 			nb++;
 	}
-	infos->playersNb = nb;
+	
+	return (nb);
 }
 
-void	getAlliesNumber(tInfos* infos)
+int	getAlliesNumber(const char* map, const int team)
 {
 	int	nb = 0;
 
-	for (int i = 0; infos->realMap[i] != '\0'; i++)
+	for (int i = 0; map[i] != '\0'; i++)
 	{
-		if (infos->realMap[i] == infos->team + 48)
+		if (map[i] == team + 48)
 			nb++;
 	}
-	infos->alliesNb = nb;
+	
+	return (nb);
 }
 
-void	removeTeam(tInfos* infos, const int team)
-{
-	for (int i = 0; infos->map[i] != NULL; i++)
-	{
-		for (int k = 0; infos->map[i][k] != '\0'; k++)
-		{
-			if (infos->map[i][k] == team)
-				infos->map[i][k] = '0';
-		}
-	}
-}
-
-void	getTeamsNumber(tInfos* infos)
+int	getTeamsNumber(char** map)
 {
 	int		nb = 0;
 	int		team = 0;
 
-	for (int i = 0; infos->map[i] != NULL; i++)
+	for (int i = 0; map[i] != NULL; i++)
 	{
-		for (int k = 0; infos->map[i][k] != '\0'; k++)
+		for (int k = 0; map[i][k] != '\0'; k++)
 		{
-			if (infos->map[i][k] != '0')
+			if (map[i][k] != '0')
 			{
-				team = infos->map[i][k];
-				removeTeam(infos, team);
+				team = map[i][k];
+				removeElement(map, team);
 				nb++;
 			}
 		}
 	}
 
-	infos->teamsNb = nb;
-	if (infos->init == true)
-	{
-		if (infos->teamsNb > 1 && infos->state == false)
-			infos->state = true;
-	}
-}
-
-void	getGameInfos(tInfos* infos)
-{
-	getTeamsNumber(infos);
-	getAlliesNumber(infos);
-	getPlayersNumber(infos);
+	return (nb);
 }
 
 bool	isOver(tInfos* infos)
