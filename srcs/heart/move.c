@@ -169,7 +169,7 @@ void	moveRandomly(tInfos* infos)
 
 void	moveTowardsTarget(tInfos* infos, const int target)
 {
-	moveRandomly(infos);
+	printf("heading to %c%d...\n", "abcdefghijklmnopqrstu"[target % MAP_WIDTH], target / MAP_WIDTH);
 }
 
 void	moveNow(tInfos* infos)
@@ -192,7 +192,13 @@ void	moveNow(tInfos* infos)
 	}
 
 	if (target != -1)
-		sendNewTarget(infos, target), moveTowardsTarget(infos, target);
+	{
+		infos->lastTarget = infos->target;
+		infos->target = target;
+
+		sendNewTarget(infos, target);
+		moveTowardsTarget(infos, target);
+	}
 	else
 		moveRandomly(infos);
 }

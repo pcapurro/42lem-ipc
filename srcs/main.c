@@ -10,7 +10,8 @@ void	setToNull(tInfos* infos)
 	infos->init = false;
 	infos->state = false;
 
-	infos->dest = -1;
+	infos->target = -1;
+	infos->lastTarget = -1;
 
 	infos->playersNb = 1;
 	infos->alliesNb = 1;
@@ -25,6 +26,13 @@ void	setToNull(tInfos* infos)
 
 void	endFree(tInfos* infos)
 {
+	if (infos->access != SEM_FAILED)
+	{
+		sem_close(infos->access);
+		if (infos->init == true)
+			sem_unlink(ACC_NAME);
+	}
+
 	if (infos->mapFd != -1)
 	{
 		close(infos->mapFd);
@@ -55,6 +63,9 @@ void	endSignal(const int signal)
 	writeStr(ERASE_LINE, 2);
 	writeStr(END_MSG, 2);
 
+	// if (data->init == true)
+		// data->realMap[data->coord] = '#';
+
 	endFree(data);
 
 	exit(1);
@@ -78,8 +89,13 @@ int	main(const int argc, const char** arg)
 
 	tInfos	infos;
 
+	// shm_unlink(GAME_NAME);
+	// sem_unlink(ACC_NAME);
+	// exit(0);
+
 	data = &infos;
 	signal(SIGINT, endSignal);
+	signal(SIGSEGV, endSignal);
 
 	setToNull(&infos);
 

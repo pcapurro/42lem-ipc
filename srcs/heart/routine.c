@@ -43,10 +43,8 @@ void	getGameInfos(tInfos* infos)
 
 void	startRoutine(tInfos* infos)
 {
-	int		k = 0;
-
+	sem_wait(infos->access);
 	spawnNow(infos);
-
 	while (isOver(infos) == false)
 	{
 		updateMap(infos);
@@ -57,19 +55,22 @@ void	startRoutine(tInfos* infos)
 		if (infos->init == true)
 			printMap(infos);
 
+		sem_post(infos->access);
 		sleep(1);
-		if (k == 7)
-			break ;
-		k++;
+		sem_wait(infos->access);
 	}
 
 	if (infos->realMap[infos->coord] != '#' && infos->realMap[infos->coord] != '0')
 		infos->realMap[infos->coord] = '0';
 
+	sem_post(infos->access);
+
 	while (infos->init == true && infos->playersNb != 0)
 	{
 		printMap(infos);
+		sem_wait(infos->access);
 		infos->playersNb = getPlayersNumber(infos->realMap);
+		sem_post(infos->access);
 		sleep(1);
 	}
 }

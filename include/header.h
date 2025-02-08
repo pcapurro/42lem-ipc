@@ -26,6 +26,7 @@
 # define ERASE_LINE "\033[2K\033[G"
 
 # define GAME_NAME "/game"
+# define ACC_NAME "/access"
 # define MSG_KEY 21000
 
 # define MAP_WIDTH 21
@@ -40,7 +41,8 @@ struct sInfos
 	bool	init;
 	bool	state;
 
-	int		dest;
+	int		target;
+	int		lastTarget;
 
 	int		playersNb;
 	int		alliesNb;
@@ -51,6 +53,8 @@ struct sInfos
 	char**	map;
 
 	int		coord;
+
+	sem_t*	access;
 };
 
 typedef struct sInfos tInfos;
@@ -108,6 +112,7 @@ void	updateMap(tInfos* infos);
 void	startRoutine(tInfos* infos);
 void	initializeRoutine(tInfos* infos, const char* arg);
 
+void	initializeSemaphores(tInfos* infos);
 void	initializeMap(tInfos* infos);
 void	initializeMessages(tInfos* infos);
 

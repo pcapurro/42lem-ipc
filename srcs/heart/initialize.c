@@ -63,6 +63,17 @@ void	initializeMessages(tInfos* infos)
 		perror("42lem-ipc"), endFree(infos), exit(1);
 }
 
+void	initializeSemaphores(tInfos* infos)
+{
+	if (infos->init == true)
+		infos->access = sem_open(ACC_NAME, O_CREAT, 0666, 1);
+	else
+		infos->access = sem_open(ACC_NAME, 0);
+
+	if (infos->access == SEM_FAILED)
+		perror("42lem-ipc"), endFree(infos), exit(1);
+}
+
 void	initializeRoutine(tInfos* infos, const char* arg)
 {
 	infos->mapFd = shm_open(GAME_NAME, O_CREAT | O_EXCL | O_RDWR, 0666);
@@ -77,6 +88,7 @@ void	initializeRoutine(tInfos* infos, const char* arg)
 
 	infos->team = arg[0] - 48;
 
+	initializeSemaphores(infos);
 	initializeMap(infos);
 	initializeMessages(infos);
 }
