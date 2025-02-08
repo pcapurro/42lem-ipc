@@ -100,14 +100,13 @@ void	moveNow(tInfos* infos);
 bool	isOver(tInfos* infos);
 bool	isNowDead(tInfos* infos);
 
-int		getTeamsNumber(char** map);
+int		getTeamsNumber(char* map);
 int		getAlliesNumber(const char* map, const int team);
 int		getPlayersNumber(const char* map);
 void	getGameInfos(tInfos* infos);
 
 void	printColor(const int team);
 void	printMap(tInfos* infos);
-void	updateMap(tInfos* infos);
 
 void	startRoutine(tInfos* infos);
 void	initializeRoutine(tInfos* infos, const char* arg);

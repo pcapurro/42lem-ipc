@@ -70,21 +70,16 @@ int	getAlliesNumber(const char* map, const int team)
 	return (nb);
 }
 
-int	getTeamsNumber(char** map)
+int	getTeamsNumber(char* map)
 {
-	int		nb = 0;
-	int		team = 0;
+	int	nb = 0;
 
-	for (int i = 0; map[i] != NULL; i++)
+	for (int k = 1; k != 10; k++)
 	{
-		for (int k = 0; map[i][k] != '\0'; k++)
+		for (int i = 0; map[i] != '\0'; i++)
 		{
-			if (map[i][k] != '0')
-			{
-				team = map[i][k];
-				removeElement(map, team);
-				nb++;
-			}
+			if (map[i] != '0' && map[i] - 48 == k)
+				{ nb++; break ; }
 		}
 	}
 

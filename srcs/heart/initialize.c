@@ -29,22 +29,6 @@ void	initializeMap(tInfos* infos)
 		for (int i = 0; i != MAP_LENGTH; i++)
 			infos->realMap[i] = '0';
 	}
-
-	infos->map = malloc(sizeof(char*) * (MAP_HEIGHT + 1));
-	if (!infos->map)
-		memoryFailed(), endFree(infos), exit(1);
-	for (int i = 0; i != MAP_HEIGHT; i++)
-	{
-		infos->map[i] = NULL;
-		infos->map[i] = malloc(sizeof(char) * (MAP_WIDTH + 1));
-		if (!infos->map[i])
-			memoryFailed(), endFree(infos), exit(1);
-
-		for (int k = 0; k != MAP_WIDTH; k++)
-			infos->map[i][k] = '0';
-		infos->map[i][MAP_WIDTH] = '\0';
-	}
-	infos->map[MAP_HEIGHT] = NULL;
 }
 
 void	initializeMessages(tInfos* infos)

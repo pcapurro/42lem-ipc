@@ -19,7 +19,6 @@ void	setToNull(tInfos* infos)
 
 	infos->msgId = -1;
 	infos->realMap = NULL;
-	infos->map = NULL;
 
 	infos->coord = -1;
 }
@@ -44,13 +43,6 @@ void	endFree(tInfos* infos)
 	{
 		if (infos->init == true)
 			msgctl(infos->msgId, IPC_RMID, NULL);
-	}
-
-	if (infos->map != NULL)
-	{
-		for (int i = 0; infos->map[i] != NULL; i++)
-			free(infos->map[i]);
-		free(infos->map);
 	}
 
 	if (infos->realMap != NULL)

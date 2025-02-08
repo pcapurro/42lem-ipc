@@ -30,7 +30,7 @@ void	spawnNow(tInfos* infos)
 
 void	getGameInfos(tInfos* infos)
 {
-	infos->teamsNb = getTeamsNumber(infos->map);
+	infos->teamsNb = getTeamsNumber(infos->realMap);
 	infos->alliesNb = getAlliesNumber(infos->realMap, infos->team);
 	infos->playersNb = getPlayersNumber(infos->realMap);
 
@@ -47,7 +47,6 @@ void	startRoutine(tInfos* infos)
 	spawnNow(infos);
 	while (isOver(infos) == false)
 	{
-		updateMap(infos);
 		if (infos->init == false || infos->coord != -1)
 			moveNow(infos);
 

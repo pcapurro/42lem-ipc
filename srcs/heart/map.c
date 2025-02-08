@@ -82,12 +82,3 @@ void	printMap(tInfos* infos)
 		printf(" %c ", alphabet[i]);
 	printf("\n–\n");
 }
-
-void	updateMap(tInfos* infos)
-{
-	for (int i = 0, j = 0; infos->map[i] != NULL; i++)
-	{
-		for (int k = 0; infos->map[i][k] != '\0'; k++, j++)
-			infos->map[i][k] = infos->realMap[j];
-	}
-}
