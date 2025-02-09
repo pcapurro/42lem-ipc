@@ -55,6 +55,9 @@ void	endSignal(const int signal)
 	writeStr(ERASE_LINE, 2);
 	writeStr(END_MSG, 2);
 
+	if (signal == SIGSEGV)
+		printf("segfault.\n");
+
 	// if (data->init == true)
 		// data->realMap[data->coord] = '#';
 

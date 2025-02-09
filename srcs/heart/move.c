@@ -2,6 +2,9 @@
 
 void	move(tInfos* infos, const int newCoord)
 {
+	if (infos->realMap[newCoord] != '0')
+		return ;
+
 	infos->realMap[infos->coord] = '0';
 	infos->realMap[newCoord] = infos->team + 48;
 	infos->coord = newCoord;
@@ -94,7 +97,7 @@ void	moveRandomly(tInfos* infos)
 {
 	int	value = rand() % 8;
 
-	printf("moving randomly\n");
+	// printf("moving randomly\n");
 
 	if (value == 0)
 		moveLeft(infos);
@@ -121,7 +124,7 @@ void	moveRandomly(tInfos* infos)
 		moveRightDown(infos);
 }
 
-void	moveTowardsTarget(tInfos* infos, const int target)
+void	moveToTarget(tInfos* infos, const int target)
 {
 	int	x = infos->coord % MAP_WIDTH;
 	int y = infos->coord / MAP_WIDTH;
@@ -148,6 +151,9 @@ void	moveTowardsTarget(tInfos* infos, const int target)
 		moveLeft(infos);
 	else if (x < targetX && y == targetY)
 		moveRight(infos);
+
+	else
+		moveRandomly(infos);
 }
 
 void	moveNow(tInfos* infos)
@@ -174,8 +180,8 @@ void	moveNow(tInfos* infos)
 		infos->lastTarget = infos->target;
 		infos->target = target;
 
-		sendNewTarget(infos, target);
-		moveTowardsTarget(infos, target);
+		sendTargetInfo(infos, target);
+		moveToTarget(infos, target);
 	}
 	else
 		moveRandomly(infos);

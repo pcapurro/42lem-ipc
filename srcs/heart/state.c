@@ -2,44 +2,59 @@
 
 bool	isNowDead(tInfos* infos)
 {
-	int	attackers = 0;
+	int	attackers[8];
 	int	value = 0;
 	int	mapLen = getStrLen(infos->realMap);
 
+	for (int i = 0; i != 8; i++)
+		attackers[i] = '0';
+
 	value = infos->coord - 1;
-	if (infos->coord >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (infos->coord >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[0] = infos->realMap[value];
 
 	value = infos->coord + 1;
-	if (infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[1] = infos->realMap[value];
 
 	value = infos->coord - MAP_WIDTH;
-	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[2] = infos->realMap[value];
 
 	value = infos->coord + MAP_WIDTH;
-	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[3] = infos->realMap[value];
 
 	value = infos->coord - MAP_WIDTH - 1;
-	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[4] = infos->realMap[value];
 
 	value = (infos->coord - MAP_WIDTH) + 1;
-	if (value >= 0 && value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (value >= 0 && value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[5] = infos->realMap[value];
 
 	value = infos->coord + MAP_WIDTH - 1;
-	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[6] = infos->realMap[value];
 
 	value = infos->coord + MAP_WIDTH + 1;
-	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team)
-		attackers++;
+	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		attackers[7] = infos->realMap[value];
 
-	if (attackers > 1)
-		return (true);
+	for (int i = 0; i != 8; i++)
+	{
+		if (attackers[i] <= 48 || attackers[i] == infos->team + 48)
+			continue ;
+
+		for (int k = 0; k != 8; k++)
+		{
+			if (k != i && attackers[k] == attackers[i] && attackers[k] != infos->team + 48)
+			{
+				// printf("%d == %d\n", attackers[k], attackers[i]);
+				return (true);
+			}
+		}
+	}
 
 	return (false);
 }

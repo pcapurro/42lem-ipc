@@ -59,8 +59,11 @@ void	startRoutine(tInfos* infos)
 		sem_wait(infos->access);
 	}
 
-	if (infos->realMap[infos->coord] != '#' && infos->realMap[infos->coord] != '0')
-		infos->realMap[infos->coord] = '0';
+	if (infos->coord != -1)
+	{
+		if (infos->realMap[infos->coord] != '#' && infos->realMap[infos->coord] != '0')
+			infos->realMap[infos->coord] = '0';
+	}
 
 	sem_post(infos->access);
 

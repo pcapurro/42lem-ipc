@@ -77,7 +77,7 @@ int		createNewTarget(tInfos* infos);
 int		getLastTarget(tInfos* infos);
 int		retrieveLastTarget(tInfos* infos);
 
-void	sendNewTarget(tInfos* infos, const int newTarget);
+void	sendTargetInfo(tInfos* infos, const int newTarget);
 
 void	spawnNow(tInfos* infos);
 
@@ -94,7 +94,7 @@ void	*moveLeftDown(tInfos* infos);
 void	*moveRightDown(tInfos* infos);
 
 void	moveRandomly(tInfos* infos);
-void	moveTowardsTarget(tInfos* infos, const int target);
+void	moveToTarget(tInfos* infos, const int target);
 void	moveNow(tInfos* infos);
 
 bool	isOver(tInfos* infos);
