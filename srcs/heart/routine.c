@@ -71,9 +71,11 @@ void	startRoutine(tInfos* infos)
 	while (infos->init == true && infos->playersNb != 0)
 	{
 		printMap(infos);
+
 		sem_wait(infos->access);
 		infos->playersNb = getPlayersNumber(infos->realMap);
 		sem_post(infos->access);
+
 		sleep(1);
 	}
 }

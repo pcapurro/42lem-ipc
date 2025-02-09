@@ -21,9 +21,6 @@
 
 # define SYSTEM_FAILED "Error! System failed."
 # define MEMORY_FAILED "Error! Memory failed."
-# define END_MSG "Emergency shutdown...\n"
-
-# define ERASE_LINE "\033[2K\033[G"
 
 # define GAME_NAME "/game"
 # define ACC_NAME "/access"
@@ -69,9 +66,7 @@ typedef struct sMessage tMsg;
 
 int		getStrLen(const char* str);
 bool	isDigit(const char nb);
-
 void	writeStr(const char* str, const int fd);
-void	removeElement(char** array, const int element);
 
 int		createNewTarget(tInfos* infos);
 int		getLastTarget(tInfos* infos);

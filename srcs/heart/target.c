@@ -23,9 +23,6 @@ int	createNewTarget(tInfos* infos)
 		}
 	}
 
-	// printf("getting new target...\n");
-	// printf("new target : %c%d\n", "abcdefghijklmnopqrstu"[newTarget % MAP_WIDTH], newTarget / MAP_WIDTH);
-
 	return (newTarget);
 }
 
@@ -35,11 +32,13 @@ int		retrieveTarget(tInfos* infos, const int target)
 	int	value = 0;
 
 	value = target - 1;
-	if (target != 0 && target % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (target != 0 && target % MAP_WIDTH != 0 \
+		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
 		return (value);
 
 	value = target + 1;
-	if (value % MAP_WIDTH != 0 && value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (value % MAP_WIDTH != 0 && value < mapLen \
+		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
 		return (value);
 
 	value = target - MAP_WIDTH;
@@ -52,19 +51,23 @@ int		retrieveTarget(tInfos* infos, const int target)
 
 
 	value = target - MAP_WIDTH - 1;
-	if (value >= 0 && target % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (value >= 0 && target % MAP_WIDTH != 0 \
+		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
 		return (value);
 
 	value = (target - MAP_WIDTH) + 1;
-	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 \
+		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
 		return (value);
 
 	value = (target + MAP_WIDTH) - 1;
-	if (value >= 0 && value < mapLen && target % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (value >= 0 && value < mapLen && target % MAP_WIDTH != 0 \
+		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
 		return (value);
 
 	value = target + MAP_WIDTH + 1;
-	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 \
+		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
 		return (value);
 
 	return (-1);
@@ -90,14 +93,18 @@ int		retrieveLastTarget(tInfos* infos)
 	if (target == -1 && infos->lastTarget + MAP_WIDTH < mapLen)
 		target = retrieveTarget(infos, infos->lastTarget + MAP_WIDTH);
 
-	if (target == -1 && (infos->lastTarget - MAP_WIDTH - 1) >= 0 && infos->lastTarget % MAP_WIDTH != 0)
+	if (target == -1 && (infos->lastTarget - MAP_WIDTH - 1) >= 0 \
+		&& infos->lastTarget % MAP_WIDTH != 0)
 		target = retrieveTarget(infos, (infos->lastTarget - MAP_WIDTH) - 1);
-	if (target == -1 && ((infos->lastTarget - MAP_WIDTH) + 1) >= 0 && (infos->lastTarget + 1) % MAP_WIDTH != 0)
+	if (target == -1 && ((infos->lastTarget - MAP_WIDTH) + 1) >= 0 \
+		&& (infos->lastTarget + 1) % MAP_WIDTH != 0)
 		target = retrieveTarget(infos, (infos->lastTarget - MAP_WIDTH) + 1);
 
-	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) - 1) < mapLen && infos->lastTarget % MAP_WIDTH != 0)
+	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) - 1) < mapLen \
+		&& infos->lastTarget % MAP_WIDTH != 0)
 		target = retrieveTarget(infos, (infos->lastTarget + (MAP_WIDTH)) - 1);
-	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) + 1) < mapLen && (infos->lastTarget + 1) % MAP_WIDTH != 0)
+	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) + 1) < mapLen \
+		&& (infos->lastTarget + 1) % MAP_WIDTH != 0)
 		target = retrieveTarget(infos, (infos->lastTarget + (MAP_WIDTH)) + 1);
 
 	return (target);
@@ -107,16 +114,13 @@ int	getLastTarget(tInfos* infos)
 {
 	tMsg	message;
 
-	// printf("getting last target...\n");
-
-	if (msgrcv(infos->msgId, &message, sizeof(message) - sizeof(long), infos->team, IPC_NOWAIT) == -1)
+	if (msgrcv(infos->msgId, &message, sizeof(message) - sizeof(long), \
+		infos->team, IPC_NOWAIT) == -1)
 	{
 		if (errno != EAGAIN && errno != EWOULDBLOCK && errno != ENOMSG)
 			perror("42lem-ipc"), endFree(infos), exit(1);
 		message.info = -1;
 	}
-
-	// printf("last target: %c%d\n", "abcdefghijklmnopqrstu"[message.info % MAP_WIDTH], message.info / MAP_WIDTH);
 
 	return (message.info);
 }
@@ -129,8 +133,6 @@ void	sendTargetInfo(tInfos* infos, const int newTarget)
 
 	message.teamId = infos->team;
 	message.info = newTarget;
-
-	// printf("sending new target to allies : %c%d\n", "abcdefghijklmnopqrstu"[newTarget % MAP_WIDTH], newTarget / MAP_WIDTH);
 
 	if (msgsnd(infos->msgId, &message, sizeof(message) - sizeof(long), 0) == -1)
 		perror("42lem-ipc"), endFree(infos), exit(1);

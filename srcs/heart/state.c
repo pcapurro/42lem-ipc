@@ -10,12 +10,18 @@ bool	isNowDead(tInfos* infos)
 		attackers[i] = '0';
 
 	value = infos->coord - 1;
-	if (infos->coord >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-		attackers[0] = infos->realMap[value];
+	if (infos->coord % MAP_WIDTH != 0)
+	{
+		if (infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+			attackers[0] = infos->realMap[value];
+	}
 
 	value = infos->coord + 1;
-	if (infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-		attackers[1] = infos->realMap[value];
+	if (value % MAP_WIDTH != 0)
+	{
+		if (infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+			attackers[1] = infos->realMap[value];
+	}
 
 	value = infos->coord - MAP_WIDTH;
 	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
@@ -25,21 +31,34 @@ bool	isNowDead(tInfos* infos)
 	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
 		attackers[3] = infos->realMap[value];
 
+
 	value = infos->coord - MAP_WIDTH - 1;
-	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-		attackers[4] = infos->realMap[value];
+	if (infos->coord % MAP_WIDTH != 0)
+	{
+		if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+			attackers[4] = infos->realMap[value];
+	}
 
 	value = (infos->coord - MAP_WIDTH) + 1;
-	if (value >= 0 && value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-		attackers[5] = infos->realMap[value];
+	if ((infos->coord + 1) % MAP_WIDTH != 0)
+	{
+		if (value >= 0 && value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+			attackers[5] = infos->realMap[value];
+	}
 
 	value = infos->coord + MAP_WIDTH - 1;
-	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-		attackers[6] = infos->realMap[value];
+	if (infos->coord % MAP_WIDTH != 0)
+	{
+		if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+			attackers[6] = infos->realMap[value];
+	}
 
 	value = infos->coord + MAP_WIDTH + 1;
-	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-		attackers[7] = infos->realMap[value];
+	if ((infos->coord + 1) % MAP_WIDTH != 0)
+	{
+		if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+			attackers[7] = infos->realMap[value];
+	}
 
 	for (int i = 0; i != 8; i++)
 	{
@@ -49,10 +68,7 @@ bool	isNowDead(tInfos* infos)
 		for (int k = 0; k != 8; k++)
 		{
 			if (k != i && attackers[k] == attackers[i] && attackers[k] != infos->team + 48)
-			{
-				// printf("%d == %d\n", attackers[k], attackers[i]);
 				return (true);
-			}
 		}
 	}
 

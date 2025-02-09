@@ -22,7 +22,8 @@ void	*moveLeft(tInfos* infos)
 
 void	*moveRight(tInfos* infos)
 {
-	if (infos->coord + 1 >= getStrLen(infos->realMap) || (infos->coord + 1) % MAP_WIDTH == 0)
+	if (infos->coord + 1 >= getStrLen(infos->realMap) \
+		|| (infos->coord + 1) % MAP_WIDTH == 0)
 		return (NULL);
 
 	move(infos, infos->coord + 1);
@@ -62,7 +63,8 @@ void	*moveLeftUp(tInfos* infos)
 
 void	*moveRightUp(tInfos* infos)
 {
-	if ((infos->coord - MAP_WIDTH) + 1 < 0 || (infos->coord - MAP_WIDTH) + 1 >= getStrLen(infos->realMap)
+	if ((infos->coord - MAP_WIDTH) + 1 < 0 \
+		|| (infos->coord - MAP_WIDTH) + 1 >= getStrLen(infos->realMap) \
 		|| (infos->coord + 1) % MAP_WIDTH == 0)
 		return (NULL);
 
@@ -73,7 +75,8 @@ void	*moveRightUp(tInfos* infos)
 
 void	*moveLeftDown(tInfos* infos)
 {
-	if ((infos->coord + MAP_WIDTH) - 1 < 0 || (infos->coord + MAP_WIDTH) - 1 >= getStrLen(infos->realMap)
+	if ((infos->coord + MAP_WIDTH) - 1 < 0 \
+		|| (infos->coord + MAP_WIDTH) - 1 >= getStrLen(infos->realMap) \
 		|| infos->coord % MAP_WIDTH == 0)
 		return (NULL);
 
@@ -84,7 +87,8 @@ void	*moveLeftDown(tInfos* infos)
 
 void	*moveRightDown(tInfos* infos)
 {
-	if ((infos->coord + MAP_WIDTH) + 1 < 0 || (infos->coord + MAP_WIDTH) + 1 >= getStrLen(infos->realMap)
+	if ((infos->coord + MAP_WIDTH) + 1 < 0 \
+		|| (infos->coord + MAP_WIDTH) + 1 >= getStrLen(infos->realMap) \
 		|| (infos->coord + 1) % MAP_WIDTH == 0)
 		return (NULL);
 
@@ -97,29 +101,23 @@ void	moveRandomly(tInfos* infos)
 {
 	int	value = rand() % 8;
 
-	// printf("moving randomly\n");
-
 	if (value == 0)
 		moveLeft(infos);
-
 	if (value == 1)
 		moveRight(infos);
 
 	if (value == 2)
 		moveUp(infos);
-
 	if (value == 3)
 		moveDown(infos);
 
 	if (value == 4)
 		moveLeftUp(infos);
-
 	if (value == 5)
 		moveRightUp(infos);
 
 	if (value == 6)
 		moveLeftDown(infos);
-
 	if (value == 7)
 		moveRightDown(infos);
 }
@@ -154,8 +152,6 @@ void	moveToTarget(tInfos* infos, const int target)
 
 	else
 		moveRandomly(infos);
-
-	// printf("heading to %c%d\n", "abcdefghijklmnopqrstu"[target % MAP_WIDTH], target / MAP_WIDTH);
 }
 
 void	moveNow(tInfos* infos)

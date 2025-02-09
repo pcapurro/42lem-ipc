@@ -4,25 +4,21 @@ void	printColor(const int team)
 {
 	if (team == 1)
 		printf("\033[31m");
-
 	if (team == 2)
 		printf("\033[32m");
 
 	if (team == 3)
 		printf("\033[33m");
-
 	if (team == 4)
 		printf("\033[34m");
 
 	if (team == 5)
 		printf("\033[35m");
-
 	if (team == 6)
 		printf("\033[36m");
 
 	if (team == 7)
 		printf("\033[37m");
-
 	if (team == 8)
 		printf("\033[38;5;220m");
 
@@ -38,7 +34,7 @@ void	printMap(tInfos* infos)
 	printf("– 42lem-ipc –\n\n");
 
 	printf("Players: %d\n", infos->playersNb);
-	printf("Teams: %d\n", infos->teamsNb);
+	printf("Teams: %d\n\n", infos->teamsNb);
 	printf("Game map: \n\n");
 
 	printf("    ");
