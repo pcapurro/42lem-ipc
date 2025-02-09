@@ -145,7 +145,8 @@ bool	isOver(tInfos* infos)
 
 		if (infos->state == true && infos->teamsNb == 1)
 		{
-			infos->realMap[0] = '#';
+			for (int i = 0; infos->realMap[i] != '\0'; i++)
+				infos->realMap[i] = '#';
 			return (true);
 		}
 	}

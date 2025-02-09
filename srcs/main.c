@@ -25,13 +25,6 @@ void	setToNull(tInfos* infos)
 
 void	endFree(tInfos* infos)
 {
-	if (infos->access != SEM_FAILED)
-	{
-		sem_close(infos->access);
-		if (infos->init == true)
-			sem_unlink(ACC_NAME);
-	}
-
 	if (infos->mapFd != -1)
 	{
 		close(infos->mapFd);
@@ -39,21 +32,37 @@ void	endFree(tInfos* infos)
 			shm_unlink(GAME_NAME);
 	}
 
+	if (infos->realMap != NULL)
+		munmap(infos->realMap, sizeof(char) * 96);
+	infos->realMap = NULL;
+
 	if (infos->msgId != -1)
 	{
 		if (infos->init == true)
 			msgctl(infos->msgId, IPC_RMID, NULL);
 	}
 
-	if (infos->realMap != NULL)
-		munmap(infos->realMap, sizeof(char) * 96);
-	infos->realMap = NULL;
+	if (infos->access != SEM_FAILED)
+	{
+		sem_close(infos->access);
+		if (infos->init == true)
+			sem_unlink(ACC_NAME);
+	}
 }
 
 void	endSignal(const int signal)
 {
-	if (signal == SIGSEGV)
-		printf("segfault.\n");
+	sem_wait(data->access);
+
+	if (data->init == true)
+	{
+		for (int i = 0; data->realMap[i] != '\0'; i++)
+			data->realMap[i] = '#';
+	}
+	else if (data->realMap[data->coord] != '0')
+		data->realMap[data->coord] = '0';
+
+	sem_post(data->access);
 
 	endFree(data);
 
@@ -78,13 +87,8 @@ int	main(const int argc, const char** arg)
 
 	tInfos	infos;
 
-	// shm_unlink(GAME_NAME);
-	// sem_unlink(ACC_NAME);
-	// exit(0);
-
 	data = &infos;
 	signal(SIGINT, endSignal);
-	signal(SIGSEGV, endSignal);
 
 	setToNull(&infos);
 
