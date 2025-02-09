@@ -65,9 +65,17 @@ void	printMap(tInfos* infos)
 			printf(" 0 ");
 		else
 		{
-			printf(" ");
-			printColor(infos->realMap[i] - 48);
-			printf("%c\033[0m ", infos->realMap[i]);
+			if (infos->realMap[i] == '%')
+			{
+				printf(" ");
+				printf("\033[31mf\033[0m ");
+			}
+			else
+			{
+				printf(" ");
+				printColor(infos->realMap[i] - 48);
+				printf("%c\033[0m ", infos->realMap[i]);
+			}
 		}
 	}
 	printf(" │\n    ");

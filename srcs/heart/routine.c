@@ -45,6 +45,7 @@ void	startRoutine(tInfos* infos)
 {
 	sem_wait(infos->access);
 	spawnNow(infos);
+
 	while (isOver(infos) == false)
 	{
 		if (infos->init == false || infos->coord != -1)

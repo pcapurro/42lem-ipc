@@ -29,59 +29,78 @@ int	createNewTarget(tInfos* infos)
 	return (newTarget);
 }
 
+int		retrieveTarget(tInfos* infos, const int target)
+{
+	int	mapLen = getStrLen(infos->realMap);
+	int	value = 0;
+
+	value = target - 1;
+	if (target != 0 && target % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+	value = target + 1;
+	if (value % MAP_WIDTH != 0 && value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+	value = target - MAP_WIDTH;
+	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+	value = target + MAP_WIDTH;
+	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+
+	value = target - MAP_WIDTH - 1;
+	if (value >= 0 && target % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+	value = (target - MAP_WIDTH) + 1;
+	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+	value = (target + MAP_WIDTH) - 1;
+	if (value >= 0 && value < mapLen && target % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+	value = target + MAP_WIDTH + 1;
+	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		return (value);
+
+	return (-1);
+}
+
 int		retrieveLastTarget(tInfos* infos)
 {
 	if (infos->lastTarget == -1)
 		return (-1);
 
 	int	mapLen = getStrLen(infos->realMap);
+	int target = -1;
 
-	// printf("target last coord : %c%d\n", "abcdefghijklmnopqrstuvalue"[infos->lastTarget % MAP_WIDTH], infos->lastTarget / MAP_WIDTH);
+	target = retrieveTarget(infos, infos->lastTarget);
 
-	for (int i = 1, value = 0; i != 2; i++)
-	{
-		value = infos->lastTarget - i;
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstuvalue"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (infos->lastTarget >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
+	if (target == -1 && infos->lastTarget % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, infos->lastTarget - 1);
+	if (target == -1 && (infos->lastTarget + 1) % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, infos->lastTarget + 1);
 
-		value = infos->lastTarget + i;
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstu"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
+	if (target == -1 && (infos->lastTarget - MAP_WIDTH) >= 0)
+		target = retrieveTarget(infos, infos->lastTarget - MAP_WIDTH);
+	if (target == -1 && infos->lastTarget + MAP_WIDTH < mapLen)
+		target = retrieveTarget(infos, infos->lastTarget + MAP_WIDTH);
 
-		value = infos->lastTarget - (MAP_WIDTH * i);
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstu"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
+	if (target == -1 && (infos->lastTarget - MAP_WIDTH - 1) >= 0 && infos->lastTarget % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (infos->lastTarget - MAP_WIDTH) - 1);
+	if (target == -1 && ((infos->lastTarget - MAP_WIDTH) + 1) >= 0 && (infos->lastTarget + 1) % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (infos->lastTarget - MAP_WIDTH) + 1);
 
-		value = infos->lastTarget + (MAP_WIDTH * i);
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstu"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
+	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) - 1) < mapLen && infos->lastTarget % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (infos->lastTarget + (MAP_WIDTH)) - 1);
+	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) + 1) < mapLen && (infos->lastTarget + 1) % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (infos->lastTarget + (MAP_WIDTH)) + 1);
 
-		value = infos->lastTarget - (MAP_WIDTH * i) - i;
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstu"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
-
-		value = (infos->lastTarget - (MAP_WIDTH * i)) + i;
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstu"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (value >= 0 && value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
-
-		value = infos->lastTarget + (MAP_WIDTH * i) - i;
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstu"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
-
-		value = infos->lastTarget + (MAP_WIDTH * i) + i;
-		// printf("checking %c%d\n", "abcdefghijklmnopqrstu"[value % MAP_WIDTH], value / MAP_WIDTH);
-		if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
-			return (value);
-	}
-
-	return (-1);
+	return (target);
 }
 
 int	getLastTarget(tInfos* infos)

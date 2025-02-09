@@ -154,6 +154,8 @@ void	moveToTarget(tInfos* infos, const int target)
 
 	else
 		moveRandomly(infos);
+
+	// printf("heading to %c%d\n", "abcdefghijklmnopqrstu"[target % MAP_WIDTH], target / MAP_WIDTH);
 }
 
 void	moveNow(tInfos* infos)
