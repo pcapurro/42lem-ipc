@@ -99,7 +99,10 @@ void	*moveRightDown(tInfos* infos)
 
 void	moveRandomly(tInfos* infos)
 {
-	int	value = rand() % 8;
+	int	value = 0;
+
+	srand(time(NULL));
+	value = rand() % 8;
 
 	if (value == 0)
 		moveLeft(infos);
@@ -122,13 +125,13 @@ void	moveRandomly(tInfos* infos)
 		moveRightDown(infos);
 }
 
-void	moveToTarget(tInfos* infos, const int target)
+void	moveToTarget(tInfos* infos)
 {
 	int	x = infos->coord % MAP_WIDTH;
 	int y = infos->coord / MAP_WIDTH;
 
-	int targetX = target % MAP_WIDTH;
-	int targetY = target / MAP_WIDTH;
+	int targetX = infos->target % MAP_WIDTH;
+	int targetY = infos->target / MAP_WIDTH;
 
 	if (x > targetX && y > targetY)
 		moveLeftUp(infos);
@@ -178,8 +181,8 @@ void	moveNow(tInfos* infos)
 		infos->lastTarget = infos->target;
 		infos->target = target;
 
-		sendTargetInfo(infos, target);
-		moveToTarget(infos, target);
+		sendTargetInfo(infos);
+		moveToTarget(infos);
 	}
 	else
 		moveRandomly(infos);

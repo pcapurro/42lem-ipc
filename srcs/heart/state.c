@@ -75,41 +75,41 @@ bool	isNowDead(tInfos* infos)
 	return (false);
 }
 
-int	getPlayersNumber(const char* map)
+int	getPlayersNumber(tInfos* infos)
 {
 	int	nb = 0;
 
-	for (int i = 0; map[i] != '\0'; i++)
+	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
-		if (map[i] > 48)
+		if (infos->realMap[i] > 48)
 			nb++;
 	}
 	
 	return (nb);
 }
 
-int	getAlliesNumber(const char* map, const int team)
+int	getAlliesNumber(tInfos* infos)
 {
 	int	nb = 0;
 
-	for (int i = 0; map[i] != '\0'; i++)
+	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
-		if (map[i] == team + 48)
+		if (infos->realMap[i] == infos->team + 48)
 			nb++;
 	}
 	
 	return (nb);
 }
 
-int	getTeamsNumber(char* map)
+int	getTeamsNumber(tInfos* infos)
 {
 	int	nb = 0;
 
 	for (int k = 1; k != 10; k++)
 	{
-		for (int i = 0; map[i] != '\0'; i++)
+		for (int i = 0; infos->realMap[i] != '\0'; i++)
 		{
-			if (map[i] != '0' && map[i] - 48 == k)
+			if (infos->realMap[i] != '0' && infos->realMap[i] - 48 == k)
 				{ nb++; break ; }
 		}
 	}

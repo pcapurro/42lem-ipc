@@ -13,6 +13,7 @@ void	spawnNow(tInfos* infos)
 	if (free == 0)
 		endFree(infos), exit(1);
 
+	srand(time(NULL));
 	value = rand() % free;
 	free = 0;
 
@@ -30,9 +31,9 @@ void	spawnNow(tInfos* infos)
 
 void	getGameInfos(tInfos* infos)
 {
-	infos->teamsNb = getTeamsNumber(infos->realMap);
-	infos->alliesNb = getAlliesNumber(infos->realMap, infos->team);
-	infos->playersNb = getPlayersNumber(infos->realMap);
+	infos->teamsNb = getTeamsNumber(infos);
+	infos->alliesNb = getAlliesNumber(infos);
+	infos->playersNb = getPlayersNumber(infos);
 
 	if (infos->init == true)
 	{
@@ -73,7 +74,7 @@ void	startRoutine(tInfos* infos)
 		printMap(infos);
 
 		sem_wait(infos->access);
-		infos->playersNb = getPlayersNumber(infos->realMap);
+		infos->playersNb = getPlayersNumber(infos);
 		sem_post(infos->access);
 
 		sleep(1);

@@ -3,86 +3,64 @@
 void	printColor(const int team)
 {
 	if (team == 1)
-		printf("\033[31m");
+		writeStr("\033[31m", 1);
 	if (team == 2)
-		printf("\033[32m");
+		writeStr("\033[32m", 1);
 
 	if (team == 3)
-		printf("\033[33m");
+		writeStr("\033[33m", 1);
 	if (team == 4)
-		printf("\033[34m");
+		writeStr("\033[34m", 1);
 
 	if (team == 5)
-		printf("\033[35m");
+		writeStr("\033[35m", 1);
 	if (team == 6)
-		printf("\033[36m");
+		writeStr("\033[36m", 1);
 
 	if (team == 7)
-		printf("\033[37m");
+		writeStr("\033[37m", 1);
 	if (team == 8)
-		printf("\033[38;5;220m");
+		writeStr("\033[38;5;220m", 1);
 
 	if (team == 9)
-		printf("\033[38;5;94m");
+		writeStr("\033[38;5;94m", 1);
 }
 
 void	printMap(tInfos* infos)
 {
-	const char*	alphabet = "abcdefghijklmnopqrstuvwxyz";
+	char	value = '\0';
 
-	printf("\033[H\033[J");
-	printf("– 42lem-ipc –\n\n");
+	writeStr("\033[H\033[J", 1);
+	writeStr("– 42lem-ipc –\n\n", 1);
 
-	printf("Players: %d\n", infos->playersNb);
-	printf("Teams: %d\n\n", infos->teamsNb);
-	printf("Game map: \n\n");
+	value = infos->playersNb + 48;
+	writeStr("Players: ", 1), write(1, &value, sizeof(char));
+	value = infos->teamsNb + 48;
+	writeStr("\nTeams: ", 1), write(1, &value, sizeof(char));
 
-	printf("    ");
-	for (int i = 0; i != MAP_WIDTH + 1; i++)
-		printf("───");
-	printf("\n");
+	writeStr("\n\nGame map: \n\n   ", 1);
 
-	printf(" 1 ");
-	if (MAP_HEIGHT >= 10)
-		printf(" ");
-	printf("│");
+	for (int i = 0; i != MAP_WIDTH; i++)
+		writeStr("───", 1);
+	writeStr("\n  │", 1);
 
-	for (int i = 0, k = 0; infos->realMap[i] != '\0'; i++)
+	for (int i = 0; infos->realMap[i] != '\0'; i++)
 	{
 		if (i % MAP_WIDTH == 0 && i != 0)
-		{
-			if (MAP_HEIGHT >= 10 && k + 2 < 10)
-				printf(" │\n %d  │", k + 2);
-			else
-				printf(" │\n %d │", k + 2);
-			k++;
-		}
-		if (infos->realMap[i] == '#' || infos->realMap[i] == '0')
-			printf(" 0 ");
+			writeStr("│\n  │", 1);
+
+		if (infos->realMap[i] <= 48)
+			writeStr(" 0 ", 1);
 		else
 		{
-			if (infos->realMap[i] == '%')
-			{
-				printf(" ");
-				printf("\033[31mf\033[0m ");
-			}
-			else
-			{
-				printf(" ");
-				printColor(infos->realMap[i] - 48);
-				printf("%c\033[0m ", infos->realMap[i]);
-			}
+			writeStr(" ", 1);
+			printColor(infos->realMap[i] - 48);
+			write(1, &infos->realMap[i], sizeof(char));
+			writeStr("\033[0m ", 1);
 		}
 	}
-	printf(" │\n    ");
-	for (int i = 0; i != MAP_WIDTH + 1; i++)
-		printf("───");
-	
-	printf("\n    ");
-	if (MAP_HEIGHT >= 10)
-		printf(" ");
-
-	for (int i = 0; alphabet[i] != '\0' && i != MAP_WIDTH; i++)
-		printf(" %c ", alphabet[i]);
-	printf("\n–\n");
+	writeStr("│\n   ", 1);
+	for (int i = 0; i != MAP_WIDTH; i++)
+		writeStr("───", 1);
+	writeStr("\n    \n–\n", 1);
 }

@@ -8,14 +8,14 @@ void	initializeMap(tInfos* infos)
 			perror("42lem-ipc"), endFree(infos), exit(1);
 	}
 	else
-	{
 		infos->mapFd = shm_open(GAME_NAME, O_RDWR, 0666);
-		if (infos->mapFd == -1)
-			perror("42lem-ipc"), endFree(infos), exit(1);
-	}
+
+	if (infos->mapFd == -1)
+		perror("42lem-ipc"), endFree(infos), exit(1);
 
 	infos->realMap = mmap(NULL, sizeof(char) * (MAP_LENGTH + 1), \
 		PROT_READ | PROT_WRITE, MAP_SHARED, infos->mapFd, 0);
+
 	if (infos->realMap == MAP_FAILED)
 		perror("42lem-ipc"), endFree(infos), exit(1);
 	

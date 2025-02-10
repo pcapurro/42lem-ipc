@@ -32,7 +32,7 @@ void	endFree(tInfos* infos)
 			shm_unlink(GAME_NAME);
 	}
 
-	if (infos->realMap != NULL)
+	if (infos->realMap != NULL && infos->realMap != MAP_FAILED)
 		munmap(infos->realMap, sizeof(char) * 96);
 	infos->realMap = NULL;
 
@@ -52,6 +52,10 @@ void	endFree(tInfos* infos)
 
 void	endSignal(const int signal)
 {
+	(void) signal;
+
+	writeStr("\n", 1);
+
 	sem_wait(data->access);
 
 	if (data->init == true)

@@ -10,6 +10,7 @@
 # include <errno.h>
 # include <sys/mman.h>
 # include <fcntl.h>
+# include <time.h>
 # include <string.h>
 # include <signal.h>
 
@@ -72,7 +73,7 @@ int		createNewTarget(tInfos* infos);
 int		getLastTarget(tInfos* infos);
 int		retrieveLastTarget(tInfos* infos);
 
-void	sendTargetInfo(tInfos* infos, const int newTarget);
+void	sendTargetInfo(tInfos* infos);
 
 void	spawnNow(tInfos* infos);
 
@@ -89,15 +90,15 @@ void	*moveLeftDown(tInfos* infos);
 void	*moveRightDown(tInfos* infos);
 
 void	moveRandomly(tInfos* infos);
-void	moveToTarget(tInfos* infos, const int target);
+void	moveToTarget(tInfos* infos);
 void	moveNow(tInfos* infos);
 
 bool	isOver(tInfos* infos);
 bool	isNowDead(tInfos* infos);
 
-int		getTeamsNumber(char* map);
-int		getAlliesNumber(const char* map, const int team);
-int		getPlayersNumber(const char* map);
+int		getTeamsNumber(tInfos* infos);
+int		getAlliesNumber(tInfos* infos);
+int		getPlayersNumber(tInfos* infos);
 void	getGameInfos(tInfos* infos);
 
 void	printColor(const int team);

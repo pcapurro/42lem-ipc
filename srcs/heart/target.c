@@ -3,7 +3,10 @@
 int	createNewTarget(tInfos* infos)
 {
 	int	newTarget = -1;
-	int	value = rand() % 2;
+	int	value = 0;
+	
+	srand(time(NULL));
+	value = rand() % 2;
 
 	if (value == 0)
 	{
@@ -125,14 +128,16 @@ int	getLastTarget(tInfos* infos)
 	return (message.info);
 }
 
-void	sendTargetInfo(tInfos* infos, const int newTarget)
+void	sendTargetInfo(tInfos* infos)
 {
 	tMsg	message;
+	void*	ptr = &message;
 
-	memset(&message, 0, sizeof(message));
+	for (int i = 0; i != sizeof(message); i++)
+		((unsigned char*)ptr)[i] = 0;
 
 	message.teamId = infos->team;
-	message.info = newTarget;
+	message.info = infos->target;
 
 	if (msgsnd(infos->msgId, &message, sizeof(message) - sizeof(long), 0) == -1)
 		perror("42lem-ipc"), endFree(infos), exit(1);
