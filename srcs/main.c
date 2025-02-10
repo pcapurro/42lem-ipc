@@ -11,7 +11,6 @@ void	setToNull(tInfos* infos)
 	infos->state = false;
 
 	infos->target = -1;
-	infos->lastTarget = -1;
 
 	infos->playersNb = 1;
 	infos->alliesNb = 1;
