@@ -40,7 +40,6 @@ struct sInfos
 	bool	state;
 
 	int		target;
-	int		lastTarget;
 
 	int		playersNb;
 	int		alliesNb;
@@ -71,7 +70,9 @@ void	writeStr(const char* str, const int fd);
 
 int		createNewTarget(tInfos* infos);
 int		getLastTarget(tInfos* infos);
-int		retrieveLastTarget(tInfos* infos);
+
+int		retrieveTarget(tInfos* infos, const int target);
+int		retrieveLastTarget(tInfos* infos, const int lastTarget);
 
 void	sendTargetInfo(tInfos* infos);
 

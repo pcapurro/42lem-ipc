@@ -76,39 +76,39 @@ int		retrieveTarget(tInfos* infos, const int target)
 	return (-1);
 }
 
-int		retrieveLastTarget(tInfos* infos)
+int		retrieveLastTarget(tInfos* infos, const int lastTarget)
 {
-	if (infos->lastTarget == -1)
+	if (lastTarget == -1)
 		return (-1);
 
 	int	mapLen = getStrLen(infos->realMap);
 	int target = -1;
 
-	target = retrieveTarget(infos, infos->lastTarget);
+	target = retrieveTarget(infos, lastTarget);
 
-	if (target == -1 && infos->lastTarget % MAP_WIDTH != 0)
-		target = retrieveTarget(infos, infos->lastTarget - 1);
-	if (target == -1 && (infos->lastTarget + 1) % MAP_WIDTH != 0)
-		target = retrieveTarget(infos, infos->lastTarget + 1);
+	if (target == -1 && lastTarget % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, lastTarget - 1);
+	if (target == -1 && (lastTarget + 1) % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, lastTarget + 1);
 
-	if (target == -1 && (infos->lastTarget - MAP_WIDTH) >= 0)
-		target = retrieveTarget(infos, infos->lastTarget - MAP_WIDTH);
-	if (target == -1 && infos->lastTarget + MAP_WIDTH < mapLen)
-		target = retrieveTarget(infos, infos->lastTarget + MAP_WIDTH);
+	if (target == -1 && (lastTarget - MAP_WIDTH) >= 0)
+		target = retrieveTarget(infos, lastTarget - MAP_WIDTH);
+	if (target == -1 && lastTarget + MAP_WIDTH < mapLen)
+		target = retrieveTarget(infos, lastTarget + MAP_WIDTH);
 
-	if (target == -1 && (infos->lastTarget - MAP_WIDTH - 1) >= 0 \
-		&& infos->lastTarget % MAP_WIDTH != 0)
-		target = retrieveTarget(infos, (infos->lastTarget - MAP_WIDTH) - 1);
-	if (target == -1 && ((infos->lastTarget - MAP_WIDTH) + 1) >= 0 \
-		&& (infos->lastTarget + 1) % MAP_WIDTH != 0)
-		target = retrieveTarget(infos, (infos->lastTarget - MAP_WIDTH) + 1);
+	if (target == -1 && (lastTarget - MAP_WIDTH - 1) >= 0 \
+		&& lastTarget % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (lastTarget - MAP_WIDTH) - 1);
+	if (target == -1 && ((lastTarget - MAP_WIDTH) + 1) >= 0 \
+		&& (lastTarget + 1) % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (lastTarget - MAP_WIDTH) + 1);
 
-	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) - 1) < mapLen \
-		&& infos->lastTarget % MAP_WIDTH != 0)
-		target = retrieveTarget(infos, (infos->lastTarget + (MAP_WIDTH)) - 1);
-	if (target == -1 && (infos->lastTarget + (MAP_WIDTH) + 1) < mapLen \
-		&& (infos->lastTarget + 1) % MAP_WIDTH != 0)
-		target = retrieveTarget(infos, (infos->lastTarget + (MAP_WIDTH)) + 1);
+	if (target == -1 && (lastTarget + (MAP_WIDTH) - 1) < mapLen \
+		&& lastTarget % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (lastTarget + (MAP_WIDTH)) - 1);
+	if (target == -1 && (lastTarget + (MAP_WIDTH) + 1) < mapLen \
+		&& (lastTarget + 1) % MAP_WIDTH != 0)
+		target = retrieveTarget(infos, (lastTarget + (MAP_WIDTH)) + 1);
 
 	return (target);
 }

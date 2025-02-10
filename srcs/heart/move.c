@@ -170,7 +170,7 @@ void	moveNow(tInfos* infos)
 	{
 		if (infos->realMap[target] == '0')
 		{
-			target = retrieveLastTarget(infos);
+			target = retrieveLastTarget(infos, target);
 			if (target == -1)
 				target = createNewTarget(infos);
 		}
@@ -178,7 +178,6 @@ void	moveNow(tInfos* infos)
 
 	if (target != -1)
 	{
-		infos->lastTarget = infos->target;
 		infos->target = target;
 
 		sendTargetInfo(infos);
