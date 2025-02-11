@@ -26,16 +26,16 @@ void	setToNull(tInfos* infos)
 
 void	endFree(tInfos* infos)
 {
+	if (infos->map != NULL && infos->map != MAP_FAILED)
+		munmap(infos->map, sizeof(char) * (MAP_LENGTH + 1));
+	infos->map = NULL;
+
 	if (infos->mapFd != -1)
 	{
 		close(infos->mapFd);
 		if (infos->init == true)
 			shm_unlink(GAME_NAME);
 	}
-
-	if (infos->map != NULL && infos->map != MAP_FAILED)
-		munmap(infos->map, sizeof(char) * (MAP_LENGTH + 1));
-	infos->map = NULL;
 
 	if (infos->msgId != -1)
 	{
@@ -68,6 +68,8 @@ void	endSignal(const int signal)
 			&& data->map[data->coord] != '0')
 			data->map[data->coord] = '0';
 	}
+
+	endFree(data);
 
 	exit(1);
 }
