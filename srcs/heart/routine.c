@@ -4,9 +4,9 @@ void	spawnNow(tInfos* infos)
 {
 	int	free = 0, value = 0;
 
-	for (int i = 0; infos->realMap[i] != '\0'; i++)
+	for (int i = 0; infos->map[i] != '\0'; i++)
 	{
-		if (infos->realMap[i] == '0')
+		if (infos->map[i] == '0')
 			free++;
 	}
 
@@ -17,16 +17,16 @@ void	spawnNow(tInfos* infos)
 	value = rand() % free;
 	free = 0;
 
-	for (int i = 0; infos->realMap[i] != '\0'; i++)
+	for (int i = 0; infos->map[i] != '\0'; i++)
 	{
-		if (infos->realMap[i] == '0')
+		if (infos->map[i] == '0')
 		{
 			free++;
 			if (free == value)
 				infos->coord = i;
 		}
 	}
-	infos->realMap[infos->coord] = infos->team + 48;
+	infos->map[infos->coord] = infos->team + 48;
 }
 
 void	getGameInfos(tInfos* infos)
@@ -63,8 +63,8 @@ void	startRoutine(tInfos* infos)
 
 	if (infos->coord != -1)
 	{
-		if (infos->realMap[infos->coord] != '#' && infos->realMap[infos->coord] != '0')
-			infos->realMap[infos->coord] = '0';
+		if (infos->map[infos->coord] != '#' && infos->map[infos->coord] != '0')
+			infos->map[infos->coord] = '0';
 	}
 
 	sem_post(infos->access);

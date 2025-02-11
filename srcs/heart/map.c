@@ -44,18 +44,18 @@ void	printMap(tInfos* infos)
 		writeStr("───", 1);
 	writeStr("\n  │", 1);
 
-	for (int i = 0; infos->realMap[i] != '\0'; i++)
+	for (int i = 0; infos->map[i] != '\0'; i++)
 	{
 		if (i % MAP_WIDTH == 0 && i != 0)
 			writeStr("│\n  │", 1);
 
-		if (infos->realMap[i] <= 48)
+		if (infos->map[i] <= 48)
 			writeStr(" 0 ", 1);
 		else
 		{
 			writeStr(" ", 1);
-			printColor(infos->realMap[i] - 48);
-			write(1, &infos->realMap[i], sizeof(char));
+			printColor(infos->map[i] - 48);
+			write(1, &infos->map[i], sizeof(char));
 			writeStr("\033[0m ", 1);
 		}
 	}

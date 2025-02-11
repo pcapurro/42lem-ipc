@@ -10,18 +10,18 @@ int	createNewTarget(tInfos* infos)
 
 	if (value == 0)
 	{
-		for (int i = 0; infos->realMap[i] != '\0'; i++)
+		for (int i = 0; infos->map[i] != '\0'; i++)
 		{
-			if (infos->realMap[i] > 48 && infos->realMap[i] != infos->team + 48)
+			if (infos->map[i] > 48 && infos->map[i] != infos->team + 48)
 				{ newTarget = i; break ; }
 		}
 	}
 
 	if (value == 1)
 	{
-		for (int i = getStrLen(infos->realMap) - 1; i != -1; i--)
+		for (int i = getStrLen(infos->map) - 1; i != -1; i--)
 		{
-			if (infos->realMap[i] > 48 && infos->realMap[i] != infos->team + 48)
+			if (infos->map[i] > 48 && infos->map[i] != infos->team + 48)
 				{ newTarget = i; break ; }
 		}
 	}
@@ -31,46 +31,46 @@ int	createNewTarget(tInfos* infos)
 
 int		retrieveTarget(tInfos* infos, const int target)
 {
-	int	mapLen = getStrLen(infos->realMap);
+	int	mapLen = getStrLen(infos->map);
 	int	value = 0;
 
 	value = target - 1;
 	if (target != 0 && target % MAP_WIDTH != 0 \
-		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		&& infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 	value = target + 1;
 	if (value % MAP_WIDTH != 0 && value < mapLen \
-		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		&& infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 	value = target - MAP_WIDTH;
-	if (value >= 0 && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (value >= 0 && infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 	value = target + MAP_WIDTH;
-	if (value < mapLen && infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+	if (value < mapLen && infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 
 	value = target - MAP_WIDTH - 1;
 	if (value >= 0 && target % MAP_WIDTH != 0 \
-		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		&& infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 	value = (target - MAP_WIDTH) + 1;
 	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 \
-		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		&& infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 	value = (target + MAP_WIDTH) - 1;
 	if (value >= 0 && value < mapLen && target % MAP_WIDTH != 0 \
-		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		&& infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 	value = target + MAP_WIDTH + 1;
 	if (value >= 0 && value < mapLen && (target + 1) % MAP_WIDTH != 0 \
-		&& infos->realMap[value] > 48 && infos->realMap[value] != infos->team + 48)
+		&& infos->map[value] > 48 && infos->map[value] != infos->team + 48)
 		return (value);
 
 	return (-1);
@@ -81,7 +81,7 @@ int		retrieveLastTarget(tInfos* infos, const int lastTarget)
 	if (lastTarget == -1)
 		return (-1);
 
-	int	mapLen = getStrLen(infos->realMap);
+	int	mapLen = getStrLen(infos->map);
 	int target = -1;
 
 	target = retrieveTarget(infos, lastTarget);

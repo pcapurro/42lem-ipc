@@ -46,8 +46,7 @@ struct sInfos
 	int		teamsNb;
 
 	int		msgId;
-	char*	realMap;
-	char**	map;
+	char*	map;
 
 	int		coord;
 

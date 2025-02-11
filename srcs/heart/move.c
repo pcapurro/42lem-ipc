@@ -2,11 +2,11 @@
 
 void	move(tInfos* infos, const int newCoord)
 {
-	if (infos->realMap[newCoord] != '0')
+	if (infos->map[newCoord] != '0')
 		return ;
 
-	infos->realMap[infos->coord] = '0';
-	infos->realMap[newCoord] = infos->team + 48;
+	infos->map[infos->coord] = '0';
+	infos->map[newCoord] = infos->team + 48;
 	infos->coord = newCoord;
 }
 
@@ -22,7 +22,7 @@ void	*moveLeft(tInfos* infos)
 
 void	*moveRight(tInfos* infos)
 {
-	if (infos->coord + 1 >= getStrLen(infos->realMap) \
+	if (infos->coord + 1 >= getStrLen(infos->map) \
 		|| (infos->coord + 1) % MAP_WIDTH == 0)
 		return (NULL);
 
@@ -43,7 +43,7 @@ void	*moveUp(tInfos* infos)
 
 void	*moveDown(tInfos* infos)
 {
-	if (infos->coord + MAP_WIDTH >= getStrLen(infos->realMap))
+	if (infos->coord + MAP_WIDTH >= getStrLen(infos->map))
 		return (NULL);
 
 	move(infos, infos->coord + MAP_WIDTH);
@@ -64,7 +64,7 @@ void	*moveLeftUp(tInfos* infos)
 void	*moveRightUp(tInfos* infos)
 {
 	if ((infos->coord - MAP_WIDTH) + 1 < 0 \
-		|| (infos->coord - MAP_WIDTH) + 1 >= getStrLen(infos->realMap) \
+		|| (infos->coord - MAP_WIDTH) + 1 >= getStrLen(infos->map) \
 		|| (infos->coord + 1) % MAP_WIDTH == 0)
 		return (NULL);
 
@@ -76,7 +76,7 @@ void	*moveRightUp(tInfos* infos)
 void	*moveLeftDown(tInfos* infos)
 {
 	if ((infos->coord + MAP_WIDTH) - 1 < 0 \
-		|| (infos->coord + MAP_WIDTH) - 1 >= getStrLen(infos->realMap) \
+		|| (infos->coord + MAP_WIDTH) - 1 >= getStrLen(infos->map) \
 		|| infos->coord % MAP_WIDTH == 0)
 		return (NULL);
 
@@ -88,7 +88,7 @@ void	*moveLeftDown(tInfos* infos)
 void	*moveRightDown(tInfos* infos)
 {
 	if ((infos->coord + MAP_WIDTH) + 1 < 0 \
-		|| (infos->coord + MAP_WIDTH) + 1 >= getStrLen(infos->realMap) \
+		|| (infos->coord + MAP_WIDTH) + 1 >= getStrLen(infos->map) \
 		|| (infos->coord + 1) % MAP_WIDTH == 0)
 		return (NULL);
 
@@ -168,7 +168,7 @@ void	moveNow(tInfos* infos)
 		target = createNewTarget(infos);
 	else
 	{
-		if (infos->realMap[target] == '0')
+		if (infos->map[target] == '0')
 		{
 			target = retrieveLastTarget(infos, target);
 			if (target == -1)

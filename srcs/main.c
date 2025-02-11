@@ -17,9 +17,11 @@ void	setToNull(tInfos* infos)
 	infos->teamsNb = 1;
 
 	infos->msgId = -1;
-	infos->realMap = NULL;
+	infos->map = NULL;
 
 	infos->coord = -1;
+
+	infos->access = NULL;
 }
 
 void	endFree(tInfos* infos)
@@ -31,9 +33,9 @@ void	endFree(tInfos* infos)
 			shm_unlink(GAME_NAME);
 	}
 
-	if (infos->realMap != NULL && infos->realMap != MAP_FAILED)
-		munmap(infos->realMap, sizeof(char) * 96);
-	infos->realMap = NULL;
+	if (infos->map != NULL && infos->map != MAP_FAILED)
+		munmap(infos->map, sizeof(char) * (MAP_LENGTH + 1));
+	infos->map = NULL;
 
 	if (infos->msgId != -1)
 	{
@@ -41,7 +43,7 @@ void	endFree(tInfos* infos)
 			msgctl(infos->msgId, IPC_RMID, NULL);
 	}
 
-	if (infos->access != SEM_FAILED)
+	if (infos->access != NULL && infos->access != SEM_FAILED)
 	{
 		sem_close(infos->access);
 		if (infos->init == true)
@@ -55,19 +57,17 @@ void	endSignal(const int signal)
 
 	writeStr("\n", 1);
 
-	sem_wait(data->access);
-
-	if (data->init == true)
+	if (data->map != NULL && data->map != MAP_FAILED)
 	{
-		for (int i = 0; data->realMap[i] != '\0'; i++)
-			data->realMap[i] = '#';
+		if (data->init == true)
+		{
+			for (int i = 0; i != MAP_LENGTH; i++)
+				data->map[i] = '#';
+		}
+		else if (data->coord != -1 && data->coord < MAP_LENGTH \
+			&& data->map[data->coord] != '0')
+			data->map[data->coord] = '0';
 	}
-	else if (data->realMap[data->coord] != '0')
-		data->realMap[data->coord] = '0';
-
-	sem_post(data->access);
-
-	endFree(data);
 
 	exit(1);
 }

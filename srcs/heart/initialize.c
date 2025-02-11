@@ -13,17 +13,17 @@ void	initializeMap(tInfos* infos)
 	if (infos->mapFd == -1)
 		perror("42lem-ipc"), endFree(infos), exit(1);
 
-	infos->realMap = mmap(NULL, sizeof(char) * (MAP_LENGTH + 1), \
+	infos->map = mmap(NULL, sizeof(char) * (MAP_LENGTH + 1), \
 		PROT_READ | PROT_WRITE, MAP_SHARED, infos->mapFd, 0);
 
-	if (infos->realMap == MAP_FAILED)
+	if (infos->map == MAP_FAILED)
 		perror("42lem-ipc"), endFree(infos), exit(1);
-	
+
 	if (infos->init == true)
 	{
-		infos->realMap[MAP_LENGTH] = '\0';
+		infos->map[MAP_LENGTH] = '\0';
 		for (int i = 0; i != MAP_LENGTH; i++)
-			infos->realMap[i] = '0';
+			infos->map[i] = '0';
 	}
 }
 
