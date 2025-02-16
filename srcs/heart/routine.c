@@ -2,7 +2,11 @@
 
 void	spawnNow(tInfos* infos)
 {
-	int	free = 0, value = 0;
+	infos->playersNb = getPlayersNumber(infos);
+	if (infos->playersNb == 9)
+		sem_post(infos->access), endFree(infos, 1);
+
+	int	free = 0;
 
 	for (int i = 0; infos->map[i] != '\0'; i++)
 	{
@@ -11,10 +15,10 @@ void	spawnNow(tInfos* infos)
 	}
 
 	if (free == 0)
-		endFree(infos), exit(1);
+		sem_post(infos->access), endFree(infos, 1);
 
 	srand(time(NULL));
-	value = rand() % free;
+	int value = rand() % free;
 	free = 0;
 
 	for (int i = 0; infos->map[i] != '\0'; i++)
@@ -37,7 +41,8 @@ void	getGameInfos(tInfos* infos)
 
 	if (infos->init == true)
 	{
-		if (infos->teamsNb > 1 && infos->state == false)
+		if (infos->teamsNb > 1 && infos->playersNb > infos->teamsNb \
+			&& infos->state == false)
 			infos->state = true;
 	}
 }

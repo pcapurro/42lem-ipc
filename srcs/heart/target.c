@@ -121,7 +121,7 @@ int	getLastTarget(tInfos* infos)
 		infos->team, IPC_NOWAIT) == -1)
 	{
 		if (errno != EAGAIN && errno != EWOULDBLOCK && errno != ENOMSG)
-			perror("42lem-ipc"), endFree(infos), exit(1);
+			perror("42lem-ipc"), endFree(infos, 1);
 		message.info = -1;
 	}
 
@@ -140,5 +140,5 @@ void	sendTargetInfo(tInfos* infos)
 	message.info = infos->target;
 
 	if (msgsnd(infos->msgId, &message, sizeof(message) - sizeof(long), 0) == -1)
-		perror("42lem-ipc"), endFree(infos), exit(1);
+		perror("42lem-ipc"), endFree(infos, 1);
 }

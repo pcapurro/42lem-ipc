@@ -3,7 +3,8 @@
 void	printHelp(void)
 {
 	writeStr("Usage: ./42lem-ipc [team number]\n", 1);
-	writeStr("Note: team number is limited from 1 to 10.\n\n", 1);
+	writeStr("Note 1: maximum number of players is 9.\n", 1);
+	writeStr("Note 2: team value can be from 1 to 9.\n\n", 1);
 
 	writeStr("Players will battle on a 2D board. ", 1);
 	writeStr("If a player is surrounded by at least 2 players of the same team, he dies.\n", 1);

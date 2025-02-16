@@ -24,7 +24,7 @@ void	setToNull(tInfos* infos)
 	infos->access = NULL;
 }
 
-void	endFree(tInfos* infos)
+void	endFree(tInfos* infos, const int value)
 {
 	if (infos->map != NULL && infos->map != MAP_FAILED)
 		munmap(infos->map, sizeof(char) * (MAP_LENGTH + 1));
@@ -49,6 +49,9 @@ void	endFree(tInfos* infos)
 		if (infos->init == true)
 			sem_unlink(ACC_NAME);
 	}
+
+	if (value == 1)
+		exit(1);
 }
 
 void	endSignal(const int signal)
@@ -69,9 +72,7 @@ void	endSignal(const int signal)
 			data->map[data->coord] = '0';
 	}
 
-	endFree(data);
-
-	exit(1);
+	endFree(data, 1);
 }
 
 int	main(const int argc, const char** arg)
@@ -100,7 +101,7 @@ int	main(const int argc, const char** arg)
 	initializeRoutine(&infos, arg[1]);
 	startRoutine(&infos);
 
-	endFree(&infos);
+	endFree(&infos, 0);
 
 	return (0);
 }

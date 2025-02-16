@@ -118,7 +118,7 @@ void	printHelp(void);
 bool	isHelp(const char* str);
 
 void	setToNull(tInfos* infos);
-void	endFree(tInfos* infos);
+void	endFree(tInfos* infos, const int value);
 
 int		main(const int argc, const char** arg);
 

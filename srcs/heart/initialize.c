@@ -5,19 +5,19 @@ void	initializeMap(tInfos* infos)
 	if (infos->init == true)
 	{
 		if (ftruncate(infos->mapFd, sizeof(char) * (MAP_LENGTH + 1)) != 0)
-			perror("42lem-ipc"), endFree(infos), exit(1);
+			perror("42lem-ipc"), endFree(infos, 1);
 	}
 	else
 		infos->mapFd = shm_open(GAME_NAME, O_RDWR, 0666);
 
 	if (infos->mapFd == -1)
-		perror("42lem-ipc"), endFree(infos), exit(1);
+		perror("42lem-ipc"), endFree(infos, 1);
 
 	infos->map = mmap(NULL, sizeof(char) * (MAP_LENGTH + 1), \
 		PROT_READ | PROT_WRITE, MAP_SHARED, infos->mapFd, 0);
 
 	if (infos->map == MAP_FAILED)
-		perror("42lem-ipc"), endFree(infos), exit(1);
+		perror("42lem-ipc"), endFree(infos, 1);
 
 	if (infos->init == true)
 	{
@@ -35,7 +35,7 @@ void	initializeMessages(tInfos* infos)
 		infos->msgId = msgget(MSG_KEY, 0666);
 
 	if (infos->msgId == -1)
-		perror("42lem-ipc"), endFree(infos), exit(1);
+		perror("42lem-ipc"), endFree(infos, 1);
 }
 
 void	initializeSemaphores(tInfos* infos)
@@ -46,7 +46,7 @@ void	initializeSemaphores(tInfos* infos)
 		infos->access = sem_open(ACC_NAME, 0);
 
 	if (infos->access == SEM_FAILED)
-		perror("42lem-ipc"), endFree(infos), exit(1);
+		perror("42lem-ipc"), endFree(infos, 1);
 }
 
 void	initializeRoutine(tInfos* infos, const char* arg)
@@ -55,7 +55,7 @@ void	initializeRoutine(tInfos* infos, const char* arg)
 	if (infos->mapFd == -1)
 	{
 		if (errno != EEXIST)
-			perror("42lem-ipc"), endFree(infos), exit(1);
+			perror("42lem-ipc"), endFree(infos, 1);
 		infos->init = false;
 	}
 	else
